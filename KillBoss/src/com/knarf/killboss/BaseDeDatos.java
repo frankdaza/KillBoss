@@ -15,10 +15,9 @@ public class BaseDeDatos implements Serializable {
 	public ArrayList<String> nivel1P = new ArrayList<String>(), nivel2P = new ArrayList<String>(), nivel3P = new ArrayList<String>(), nivel4P = new ArrayList<String>(), nivel5P = new ArrayList<String>(), nivel6P = new ArrayList<String>();
 	public ArrayList<String> nivel1R = new ArrayList<String>(), nivel2R = new ArrayList<String>(), nivel3R = new ArrayList<String>(), nivel4R = new ArrayList<String>(), nivel5R = new ArrayList<String>(), nivel6R = new ArrayList<String>();
 	public ArrayList<String> nivel1PR = new ArrayList<String>(), nivel2PR = new ArrayList<String>(), nivel3PR = new ArrayList<String>(), nivel4PR = new ArrayList<String>(), nivel5PR = new ArrayList<String>(), nivel6PR = new ArrayList<String>();
-	
-	
+		
 	/**
-	 * Agrega una pregunta al nivel seleccionado
+	 * Agrega una pregunta al nivel seleccionado.
 	 * @param nivel
 	 * @param pregunta
 	 */
@@ -39,9 +38,31 @@ public class BaseDeDatos implements Serializable {
 		}
 	}
 	
+	/**
+	 * Modifica una pregunta en el nivel seleccionado.
+	 * @param nivel
+	 * @param posicion
+	 * @param pregunta
+	 */
+	public void setPregunta(int nivel, int posicion, String pregunta) {
+		switch (nivel) {
+		case 1:  this.nivel1P.set(posicion, pregunta);
+				 break;
+		case 2:  this.nivel2P.set(posicion, pregunta);
+		 		 break;
+		case 3:  this.nivel3P.set(posicion, pregunta);
+		 		 break;
+		case 4:  this.nivel4P.set(posicion, pregunta);
+		 		 break;
+		case 5:  this.nivel5P.set(posicion, pregunta);
+				 break;
+		case 6:  this.nivel6P.set(posicion, pregunta);
+		 		 break;
+		}
+	}
 	
 	/**
-	 * Elimina una pregunta de un nivel seleccionado dada una posicion
+	 * Elimina una pregunta de un nivel seleccionado dada una posición.
 	 * @param nivel
 	 * @param posicion
 	 */
@@ -60,34 +81,55 @@ public class BaseDeDatos implements Serializable {
 		case 6:  this.nivel1P.remove(posicion);
 		 		 break;		
 		}
-	}
-	
+	}	
 	
 	/**
-	 * Agrega una respuesta al nivel seleccionado
+	 * Agrega una respuesta al nivel seleccionado.
 	 * @param nivel
 	 * @param Respuesta
 	 */
-	public void addRespuesta(int nivel, String Respuesta) {
+	public void addRespuesta(int nivel, String respuesta) {
 		switch (nivel) {
-		case 1:  this.nivel1R.add(Respuesta);
+		case 1:  this.nivel1R.add(respuesta);
 				 break;
-		case 2:  this.nivel2R.add(Respuesta);
+		case 2:  this.nivel2R.add(respuesta);
 				 break;
-		case 3:  this.nivel3R.add(Respuesta);
+		case 3:  this.nivel3R.add(respuesta);
 		 		 break;
-		case 4:  this.nivel4R.add(Respuesta);
+		case 4:  this.nivel4R.add(respuesta);
 		 		 break;
-		case 5:  this.nivel5R.add(Respuesta);
+		case 5:  this.nivel5R.add(respuesta);
 		 		 break;
-		case 6:  this.nivel6R.add(Respuesta);
+		case 6:  this.nivel6R.add(respuesta);
 		 		 break;
 		}
 	}
 	
+	/**
+	 * Modifica una respuesta en el nivel seleccionado.
+	 * @param nivel
+	 * @param posicion
+	 * @param respuesta
+	 */
+	public void setRespuesta(int nivel, int posicion, String respuesta) {
+		switch (nivel) {
+		case 1:  this.nivel1R.set(posicion, respuesta);
+				 break;
+		case 2:  this.nivel2R.set(posicion, respuesta);
+				 break;
+		case 3:  this.nivel3R.set(posicion, respuesta);
+		 		 break;
+		case 4:  this.nivel4R.set(posicion, respuesta);
+		 		 break;
+		case 5:  this.nivel5R.set(posicion, respuesta);
+		 		 break;
+		case 6:  this.nivel6R.set(posicion, respuesta);
+		 		 break;
+		}
+	}
 	
 	/**
-	 * Elimina una respuesta de un nivel seleccionado
+	 * Elimina una respuesta de un nivel seleccionado.
 	 */
 	public void dropRespuesta(int nivel, int posicion) {
 		switch (nivel) {
@@ -105,10 +147,9 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 	}
-	
-	
+		
 	/**
-	 * Agrega una posible respuesta a un nivel seleccionado
+	 * Agrega una posible respuesta a un nivel seleccionado.
 	 * @param nivel
 	 * @param posibleRespuesta
 	 */
@@ -129,9 +170,31 @@ public class BaseDeDatos implements Serializable {
 		}
 	}	
 	
+	/**
+	 * Modifica una posible respuesta en un nivel seleccionado.
+	 * @param nivel
+	 * @param posicion
+	 * @param posibleRespuesta
+	 */
+	public void setPosibleRespuesta(int nivel, int posicion, String posibleRespuesta) {
+		switch (nivel) {
+		case 1:  this.nivel1PR.set(posicion, posibleRespuesta);
+				 break;
+		case 2:  this.nivel2PR.set(posicion, posibleRespuesta);
+		 		 break;
+		case 3:  this.nivel3PR.set(posicion, posibleRespuesta);
+		 		 break;
+		case 4:  this.nivel4PR.set(posicion, posibleRespuesta);
+		 		 break;
+		case 5:  this.nivel5PR.set(posicion, posibleRespuesta);
+		 		 break;
+		case 6:  this.nivel6PR.set(posicion, posibleRespuesta);
+		 		 break;
+		}
+	}
 	
 	/**
-	 * Elimina una posible respuesta de un nivel seleccionado
+	 * Elimina una posible respuesta de un nivel seleccionado.
 	 */
 	public void dropPosibleRespuesta(int nivel, int posicion) {
 		switch (nivel) {
@@ -149,10 +212,9 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 	}
-		
-	
+			
 	/**
-	 * Imprime todas las preguntas de un nivel seleccionado
+	 * Imprime todas las preguntas de un nivel seleccionado.
 	 * @param nivel
 	 */
 	public void imprimePreguntas(int nivel) {
@@ -194,10 +256,9 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 	}
-	
-	
+		
 	/**
-	 * Imprime todas las respuestas de un nivel seleccionado
+	 * Imprime todas las respuestas de un nivel seleccionado.
 	 * @param nivel
 	 */
 	public void imprimeRespuestas(int nivel) {
@@ -239,10 +300,9 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 	}
-	
-	
+		
 	/**
-	 * Imprime todas las posibles respuestas de un nivel seleccionado
+	 * Imprime todas las posibles respuestas de un nivel seleccionado.
 	 * @param nivel
 	 */
 	public void imprimePosiblesRespuestas(int nivel) {
@@ -284,10 +344,9 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 	}
-	
-	
+		
 	/**
-	 * Retorna una pregunta de un nivel y posición seleccionada 
+	 * Retorna una pregunta de un nivel y posición seleccionada.
 	 * @param nivel
 	 * @param posicion
 	 * @return
@@ -311,10 +370,9 @@ public class BaseDeDatos implements Serializable {
 		}
 		return tmp;
 	}
-	
-	
+		
 	/**
-	 * Retorna una respuesta de un nivel y posición seleccionada 
+	 * Retorna una respuesta de un nivel y posición seleccionada.
 	 * @param nivel
 	 * @param posicion
 	 * @return
@@ -338,10 +396,9 @@ public class BaseDeDatos implements Serializable {
 		}
 		return tmp;
 	}
-	
-	
+		
 	/**
-	 * Retorna una posible respuesta de un nivel y posición seleccionada 
+	 * Retorna una posible respuesta de un nivel y posición seleccionada.
 	 * @param nivel
 	 * @param posicion
 	 * @return
@@ -364,11 +421,10 @@ public class BaseDeDatos implements Serializable {
 		 		 break;
 		}
 		return tmp;
-	}
-	
+	}	
 	
 	/**
-	 * Retorna el tamaño del array preguntas de un nivel seleccionado
+	 * Retorna el tamaño del array preguntas de un nivel seleccionado.
 	 * @param nivel
 	 * @return
 	 */
@@ -391,10 +447,9 @@ public class BaseDeDatos implements Serializable {
 		}
 		return tmp;
 	}
-	
-	
+		
 	/**
-	 * Retorna el tamaño del array respuestas de un nivel seleccionado
+	 * Retorna el tamaño del array respuestas de un nivel seleccionado.
 	 * @param nivel
 	 * @return
 	 */
@@ -417,10 +472,9 @@ public class BaseDeDatos implements Serializable {
 		}
 		return tmp;
 	}
-	
-	
+		
 	/**
-	 * Retorna el tamaño del array preguntas de un nivel seleccionado
+	 * Retorna el tamaño del array preguntas de un nivel seleccionado.
 	 * @param nivel
 	 * @return
 	 */

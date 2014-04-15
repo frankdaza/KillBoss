@@ -36,7 +36,7 @@ public class JuegoNivel1 implements Screen {
 	public int vidas = 3;
 	
 	// Contador de preguntas
-	public int numeroPreguntas = 6;
+	public int numeroPreguntas = 5;
 	
 	// Número al azar entre 0 y 7 incluido
 	public int azar;
@@ -139,7 +139,8 @@ public class JuegoNivel1 implements Screen {
 	@Override
 	public void render(float delta) {	
 		this.camara.update();
-		this.juego.texto.setScale(2, 2);
+		this.juego.texto.setScale((float) 1.5);
+		
 		this.spriteBatchN.setProjectionMatrix(this.camara.combined);
 		
 		
@@ -159,15 +160,16 @@ public class JuegoNivel1 implements Screen {
         this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
         this.spriteBatchN.end();
         
-        if (this.numeroPreguntas > 0) {
+        if (this.numeroPreguntas > 0 && this.vidas > 0) {
         	        	    
         	this.pregunta = this.pregunta(this.azar);
-        	this.respuesta = this.respuesta(this.azar);
+        	this.respuesta = this.respuesta(this.azar);        	
+        	this.posibleRespuesta = this.posibleRespuesta(this.azar);
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 250, 1024 / 2 + 400);        	
         	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 1024, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - Respuesta incorrecta.", 2048 / 2 - 1024, 1024 / 2 + 100);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 1024, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -189,10 +191,30 @@ public class JuegoNivel1 implements Screen {
         	   this.spriteBatchN.begin();
                this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
                this.spriteBatchN.end();
-           }       
+           }
+           if (this.zackDerechaR.overlaps(AR)) {
+        	   this.numeroPreguntas = this.numeroPreguntas - 1;
+    		   this.numeroAzar();
+    		   this.zackDerechaR.x = 2048 / 2;
+    		   this.zackR.x = 2048 /2;
+           }
+           if (this.zackDerechaR.overlaps(BR)) {
+        	   this.numeroPreguntas = this.numeroPreguntas - 1;
+    		   this.vidas = this.vidas - 1;
+    		   this.numeroAzar();
+    		   this.zackDerechaR.x = 2048 / 2;
+    		   this.zackR.x = 2048 /2;
+           }
         } else {
-        	this.juego.setScreen(new Nivel2(this.juego));
-			this.dispose();
+        	if (this.numeroPreguntas == 0 && this.vidas > 0) {
+        		this.juego.setScreen(new Nivel2(this.juego));
+    			this.dispose();    			
+        	}
+        	else {
+        		this.juego.setScreen(new GameOver(this.juego));
+    			this.dispose();
+        	}
+        	
         }
         
         
@@ -237,7 +259,7 @@ public class JuegoNivel1 implements Screen {
 	}
 	
 	/**
-	 * Retorna una pregunta al azar de las base de datos
+	 * Retorna una pregunta al azar de las base de datos.
 	 * @return
 	 */
 	public String pregunta(int posicion) {	
@@ -248,7 +270,7 @@ public class JuegoNivel1 implements Screen {
 	}
 	
 	/**
-	 * Retorna una respuesta al azar de las base de datos
+	 * Retorna una respuesta al azar de las base de datos.
 	 * @return
 	 */
 	public String respuesta(int posicion) {	
@@ -256,6 +278,17 @@ public class JuegoNivel1 implements Screen {
 		this.db = a.abrir();		
 		String respuesta = this.db.getRespuesta(1, posicion);		
 		return respuesta;
+	}
+	
+	/**
+	 * Retorna una posible respuesta al azar de las base de datos.
+	 * @return
+	 */
+	public String posibleRespuesta(int posicion) {	
+		Abrir a = new Abrir();
+		this.db = a.abrir();		
+		String posibleRespuesta = this.db.getPosibleRespuesta(1, posicion);		
+		return posibleRespuesta;
 	}
 
 	@Override

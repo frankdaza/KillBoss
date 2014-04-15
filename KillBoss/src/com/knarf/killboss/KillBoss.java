@@ -18,7 +18,7 @@ public class KillBoss extends Game {
 //	public Nivel4 nivel4;
 //	public Nivel5 nivel5;
 //	public NivelFinal nivelFinal;
-//	public GameOver gameOver;	
+	public GameOver gameOver;	
 	public BitmapFont texto;
 		
 	@Override
