@@ -54,7 +54,7 @@ public class GanastePechera implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Nivel2(this.juego));
+			this.juego.setScreen(new Mapa2(this.juego));
 			this.dispose();
 		}
 		

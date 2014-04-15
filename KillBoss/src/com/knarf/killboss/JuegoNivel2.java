@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-public class JuegoNivel1 implements Screen {
+public class JuegoNivel2 implements Screen {
 	
 	final KillBoss juego;
 	
@@ -52,7 +52,7 @@ public class JuegoNivel1 implements Screen {
 	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	
-	public JuegoNivel1(final KillBoss juego) {
+	public JuegoNivel2(final KillBoss juego) {
 		this.juego = juego;
 		
 		// Genero el número al azar de la pregunta y respuestas
@@ -162,7 +162,7 @@ public class JuegoNivel1 implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 0, 1024);
-		this.juego.texto.draw(this.juego.batch, "Nivel 1", 1950, 1024);
+		this.juego.texto.draw(this.juego.batch, "Nivel 2", 1950, 1024);
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
 		this.juego.batch.draw(this.BImg, this.BR.x, this.BR.y);
 		this.juego.batch.end();
