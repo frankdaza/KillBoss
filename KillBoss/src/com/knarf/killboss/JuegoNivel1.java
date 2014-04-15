@@ -178,8 +178,8 @@ public class JuegoNivel1 implements Screen {
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 250, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 512, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 512, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 350, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 350, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -219,17 +219,14 @@ public class JuegoNivel1 implements Screen {
            }
         } else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new Nivel2(this.juego));
+        		this.juego.setScreen(new GanastePechera(this.juego));
     			this.dispose();    			
         	}
         	else {
-        		this.juego.setScreen(new GameOver(this.juego));
+        		this.juego.setScreen(new GameOver(this.juego));        		
     			this.dispose();
-        	}
-        	
-        }
-        
-        
+        	}        	
+        }        
 		
 	}
 	

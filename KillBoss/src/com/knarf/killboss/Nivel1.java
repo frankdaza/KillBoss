@@ -13,8 +13,7 @@ public class Nivel1 implements Screen {
 	final KillBoss juego;
 	public Texture fondoImg;
 	public Rectangle fondoR;
-	public OrthographicCamera camara;
-	public int tiempo = 0;
+	public OrthographicCamera camara;	
 	
 	/**
 	 * Método constructor

@@ -9,29 +9,29 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public class GameOver implements Screen {
+public class GanastePechera implements Screen {
 	
 	final KillBoss juego;
 	public Texture fondoImg;
 	public Rectangle fondoR;
 	public OrthographicCamera camara;
-	public Sound gameOver;
+	public Sound gana;
 	
 	/**
 	 * Método constructor
 	 */
-	public GameOver(final KillBoss juego){
+	public GanastePechera(final KillBoss juego){
 		this.juego = juego;
 		
 		// Cargo la imagen de fondo
-		this.fondoImg = new Texture(Gdx.files.internal("gameOver.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("ganastePechera.png"));
+		
+		// Cargo la música de ganar
+		this.gana = Gdx.audio.newSound(Gdx.files.internal("sounds/gana.mp3"));		
 		
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();
 		this.camara.setToOrtho(false, 2048, 1024);
-		
-		// Configuro el sonido de game over
-		this.gameOver = Gdx.audio.newSound(Gdx.files.internal("sounds/gameOver.mp3"));
 		
 		// Creo el rectángulo lógico para el fondo
 		this.fondoR = new Rectangle();
@@ -54,11 +54,13 @@ public class GameOver implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new MenuIntro(this.juego));
+			this.juego.setScreen(new Nivel2(this.juego));
 			this.dispose();
 		}
-				
-	}	
+		
+		
+	}
+	
 
 	@Override
 	public void resize(int width, int height) {
@@ -68,7 +70,7 @@ public class GameOver implements Screen {
 
 	@Override
 	public void show() {
-		this.gameOver.play();
+		this.gana.play();
 		
 	}
 
@@ -92,7 +94,9 @@ public class GameOver implements Screen {
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();	
+		this.fondoImg.dispose();
+		this.gana.dispose();
+		
 	}
 
 }
