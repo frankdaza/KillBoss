@@ -2,12 +2,16 @@ package com.knarf.killboss;
 
 import java.util.Scanner;
 
-
-
 public class Administrador {
 	
+	final KillBoss juego;
+	
+	public Administrador(final KillBoss juego) {
+		this.juego = juego;
+	}
+	
 	public boolean salir = true;
-	public BaseDeDatos db = new BaseDeDatos();
+	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	@SuppressWarnings("resource")
 	public void inicio() {
@@ -80,7 +84,7 @@ public class Administrador {
 		System.out.println("Ingrese la pregunta que desea agregar al nivel " + nivel + " :");
 		Scanner op2 = new Scanner(System.in);
 		String pregunta = op2.nextLine();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.addPregunta(nivel, pregunta);		
 		Guardar tmp = new Guardar();
@@ -101,7 +105,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la pregunta: ");
 		Scanner op3 = new Scanner(System.in);
 		int posicion = op3.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.setPregunta(nivel, posicion, pregunta);		
 		Guardar tmp = new Guardar();
@@ -119,7 +123,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la pregunta que desea eliminar del nivel " + nivel + " :");
 		Scanner op2 = new Scanner(System.in);
 		int pos2 = op2.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.dropPregunta(nivel, pos2);
 		Guardar g = new Guardar();
@@ -137,7 +141,7 @@ public class Administrador {
 		System.out.println("Ingrese la respuesta que desea agregar al nivel " + nivel);
 		Scanner op2 = new Scanner(System.in);
 		String respuesta = op2.nextLine();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.addRespuesta(nivel, respuesta);
 		Guardar g = new Guardar();
@@ -158,7 +162,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la respuesta: ");
 		Scanner op3 = new Scanner(System.in);
 		int posicion = op3.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.setRespuesta(nivel, posicion, respuesta);
 		Guardar g = new Guardar();
@@ -176,7 +180,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la respuesta que desea eliminar: ");
 		Scanner op2 = new Scanner(System.in);
 		int pos = op2.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.dropRespuesta(nivel, pos);
 		Guardar g = new Guardar();
@@ -194,7 +198,7 @@ public class Administrador {
 		System.out.println("Ingrese la posible respuesta que desea agregar al nivel " + nivel + ": ");
 		Scanner op2 = new Scanner(System.in);
 		String posibleRespuesta = op2.nextLine();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.addPosibleRespuesta(nivel, posibleRespuesta);
 		Guardar g = new Guardar();
@@ -215,7 +219,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la posible respuesta: ");
 		Scanner op3 = new Scanner(System.in);
 		int posicion = op3.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.setPosibleRespuesta(nivel, posicion, posibleRespuesta);
 		Guardar g = new Guardar();
@@ -233,7 +237,7 @@ public class Administrador {
 		System.out.println("Ingrese la posición de la posible respuesta que desea eliminar: ");
 		Scanner op2 = new Scanner(System.in);
 		int pos = op2.nextInt();
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
 		this.db.dropPosibleRespuesta(nivel, pos);
 		Guardar g = new Guardar();
@@ -248,7 +252,7 @@ public class Administrador {
 		System.out.println("ingrese el nivel");
 		Scanner op = new Scanner(System.in);
 		int nivel = op.nextInt();
-		Abrir tmp = new Abrir();
+		Abrir tmp = new Abrir(this.juego);
 		this.db = tmp.abrir();
 		this.db.imprimePreguntas(nivel);
 	}
@@ -261,7 +265,7 @@ public class Administrador {
 		System.out.println("ingrese el nivel");
 		Scanner op = new Scanner(System.in);
 		int nivel = op.nextInt();
-		Abrir tmp = new Abrir();
+		Abrir tmp = new Abrir(this.juego);
 		this.db = tmp.abrir();
 		this.db.imprimeRespuestas(nivel);
 	}
@@ -275,7 +279,7 @@ public class Administrador {
 		System.out.println("ingrese el nivel");
 		Scanner op = new Scanner(System.in);
 		int nivel = op.nextInt();
-		Abrir tmp = new Abrir();
+		Abrir tmp = new Abrir(this.juego);
 		this.db = tmp.abrir();
 		this.db.imprimePosiblesRespuestas(nivel);
 	}

@@ -2,20 +2,29 @@ package com.knarf.killboss;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BaseDeDatos implements Serializable {
-
 	
+	final KillBoss juego;
 	
 	/**
 	 * ID único de serialización
 	 */
 	private static final long serialVersionUID = 3740245451311275036L;
 	
+	// Información de las preguntas, respuestas y posibles respuestas de los niveles.
 	public ArrayList<String> nivel1P = new ArrayList<String>(), nivel2P = new ArrayList<String>(), nivel3P = new ArrayList<String>(), nivel4P = new ArrayList<String>(), nivel5P = new ArrayList<String>(), nivel6P = new ArrayList<String>();
 	public ArrayList<String> nivel1R = new ArrayList<String>(), nivel2R = new ArrayList<String>(), nivel3R = new ArrayList<String>(), nivel4R = new ArrayList<String>(), nivel5R = new ArrayList<String>(), nivel6R = new ArrayList<String>();
 	public ArrayList<String> nivel1PR = new ArrayList<String>(), nivel2PR = new ArrayList<String>(), nivel3PR = new ArrayList<String>(), nivel4PR = new ArrayList<String>(), nivel5PR = new ArrayList<String>(), nivel6PR = new ArrayList<String>();
-		
+	
+	// Información de los jugadores y niveles en que quedaron.
+	public ArrayList<String> partidas = new ArrayList<String>();
+	
+	public BaseDeDatos(final KillBoss juego) {
+		this.juego = juego;
+	}
+	
 	/**
 	 * Agrega una pregunta al nivel seleccionado.
 	 * @param nivel
@@ -497,4 +506,67 @@ public class BaseDeDatos implements Serializable {
 		}
 		return tmp;
 	}
+	
+	/**
+	 * Guarda la partida de un jugador.
+	 * @param nombre
+	 * @param nivel
+	 */
+	public void guardarPartida(String nombre, int nivel) {
+		String partida = "Nombre: " + nombre + "Nivel: " + nivel ;
+		this.partidas.add(partida);
+	}
+	
+	/**
+	 * Imprime las partidas que hay guardadas en el juego.
+	 */
+	public void imprimirPartidas() {
+		int pos = 0;
+		for (Iterator<String> i = this.partidas.iterator(); i.hasNext(); ) {
+			System.out.println(pos + " " + i);
+		}
+		
+	}
+	
+	/**
+	 * Carga la partida de un jugador.
+	 * @param partida
+	 */
+	public void cargarPartida(int partida) {
+		switch (partida) {
+		case 1:	 this.juego.setScreen(new Nivel2(this.juego));
+				 break;
+		case 2:	 this.juego.setScreen(new Nivel3(this.juego));
+				 break;
+		case 3:	 this.juego.setScreen(new Nivel4(this.juego));
+		 		 break;
+		case 4:	 this.juego.setScreen(new Nivel5(this.juego));
+		 		 break;
+		case 5:	 this.juego.setScreen(new NivelFinal(this.juego));
+		 		 break;
+		}			
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

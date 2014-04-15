@@ -49,7 +49,7 @@ public class JuegoNivel1 implements Screen {
 	public String pregunta, respuesta, posibleRespuesta;
 		
 	// Base de datos
-	public BaseDeDatos db = new BaseDeDatos();
+	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	
 	public JuegoNivel1(final KillBoss juego) {
@@ -275,7 +275,7 @@ public class JuegoNivel1 implements Screen {
 	 * @return
 	 */
 	public String pregunta(int posicion) {	
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
 		String pregunta = this.db.getPregunta(1, posicion);		
 		return pregunta;
@@ -286,7 +286,7 @@ public class JuegoNivel1 implements Screen {
 	 * @return
 	 */
 	public String respuesta(int posicion) {	
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
 		String respuesta = this.db.getRespuesta(1, posicion);		
 		return respuesta;
@@ -297,7 +297,7 @@ public class JuegoNivel1 implements Screen {
 	 * @return
 	 */
 	public String posibleRespuesta(int posicion) {	
-		Abrir a = new Abrir();
+		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
 		String posibleRespuesta = this.db.getPosibleRespuesta(1, posicion);		
 		return posibleRespuesta;

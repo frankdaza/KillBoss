@@ -6,8 +6,14 @@ import java.io.ObjectInputStream;
 
 public class Abrir {
 	
-	public BaseDeDatos db = new BaseDeDatos();
+	final KillBoss juego;
+	public BaseDeDatos db;
 
+	public Abrir(final KillBoss juego) {
+		this.juego = juego;
+		this.db = new BaseDeDatos(this.juego);
+	}
+	
 	public BaseDeDatos abrir() {
 		try {			
 			FileInputStream fileIn = new FileInputStream("/home/frank/Programming/KillBoss/BaseDeDatos.ser");
