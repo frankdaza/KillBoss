@@ -29,24 +29,30 @@ public class JuegoNivel1 implements Screen {
     
     // Variables del fondo, cámara y rectángulos
 	public OrthographicCamera camara;
-	public Texture fondoImg;
-	public Rectangle fondoR, zackR, zackDerechaR;
+	public Texture fondoImg, AImg, BImg;
+	public Rectangle fondoR, zackR, zackDerechaR, AR, BR;
 	
 	// Vidas del jugador
 	public int vidas = 3;
 	
+	// Contador de preguntas
+	public int numeroPreguntas = 6;
+	
+	// Número al azar entre 0 y 7 incluido
+	public int azar;
+		
 	// Pregunta, respuesta, posible respuesta
 	public String pregunta, respuesta, posibleRespuesta;
-	
-	// Pregunta al azar
-	String q = this.pregunta();
-	
+		
 	// Base de datos
 	public BaseDeDatos db = new BaseDeDatos();
 	
 	
 	public JuegoNivel1(final KillBoss juego) {
 		this.juego = juego;
+		
+		// Genero el número al azar de la pregunta y respuestas
+		this.numeroAzar();
 		
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteDerecha.png"));
@@ -81,7 +87,13 @@ public class JuegoNivel1 implements Screen {
 				
 		
 		// Cargo la imagen del fondo
-		this.fondoImg = new Texture(Gdx.files.internal("nivel1/fondo.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("fondoNiveles.png"));
+		
+		// Creo la imagen para A
+		this.AImg = new Texture(Gdx.files.internal("A.png"));
+		
+		// Creo la imagen para B
+		this.BImg = new Texture(Gdx.files.internal("B.png"));
 		
 		// Creo la cámara del juego
 		this.camara = new OrthographicCamera();
@@ -96,17 +108,31 @@ public class JuegoNivel1 implements Screen {
 		
 		// Creo el rectángulo para zack normal.
 		this.zackR = new Rectangle();
-		this.zackR.x = 0;
+		this.zackR.x = 1024;
 		this.zackR.y = 190;
 		this.zackR.width = 64;
 		this.zackR.height = 128;
 		
 		// Creo el rectángulo para zack derecha.
 		this.zackDerechaR = new Rectangle();
-		this.zackDerechaR.x = 0;
+		this.zackDerechaR.x = 1024;
 		this.zackDerechaR.y = 190;
 		this.zackDerechaR.width = 64;
 		this.zackDerechaR.height = 128;
+		
+		// Creo el rectángulo para la letra A
+		this.AR = new Rectangle();
+		this.AR.x = 1024 - 512;
+		this.AR.y = 190;
+		this.AR.width = 128;
+		this.AR.height = 128;
+		
+		// Creo el rectángulo para la letra B
+		this.BR = new Rectangle();
+		this.BR.x = 1024 + 512;
+		this.BR.y = 190;
+		this.BR.width = 128;
+		this.BR.height = 128;
 										
 	}
 
@@ -114,7 +140,8 @@ public class JuegoNivel1 implements Screen {
 	public void render(float delta) {	
 		this.camara.update();
 		this.juego.texto.setScale(2, 2);
-		this.spriteBatchN.setProjectionMatrix(this.camara.combined);			
+		this.spriteBatchN.setProjectionMatrix(this.camara.combined);
+		
 		
 		this.stateTime += Gdx.graphics.getDeltaTime();
         this.currentFrameDerecha = this.walkAnimationDerecha.getKeyFrame(this.stateTime, true);
@@ -124,34 +151,51 @@ public class JuegoNivel1 implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 0, 1024);
-		this.juego.texto.draw(this.juego.batch, this.q, 2048 / 2 - 100, 1024 / 2 + 100);
-		
+		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
+		this.juego.batch.draw(this.BImg, this.BR.x, this.BR.y);
 		this.juego.batch.end();
 		
 		this.spriteBatchN.begin();
         this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
         this.spriteBatchN.end();
         
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-        	this.zackDerecha();
+        if (this.numeroPreguntas > 0) {
+        	        	    
+        	this.pregunta = this.pregunta(this.azar);
+        	this.respuesta = this.respuesta(this.azar);
+        	
+        	this.juego.batch.begin();
+        	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 250, 1024 / 2 + 400);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 1024, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - Respuesta incorrecta.", 2048 / 2 - 1024, 1024 / 2 + 100);
+        	this.juego.batch.end();
+        	
+        	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            	this.zackDerecha();
+            }
+            if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+            	this.zackIzquierda();
+            }
+            if ( (this.zackR.x > 2048 - 64) || (this.zackDerechaR.x > 2048 - 64)) {
+            	this.zackR.x = 2048 - 64;
+            	this.zackDerechaR.x = 2048 - 64;        	
+            }
+            if ( (this.zackR.x < 0) || (this.zackDerechaR.x < 0) ) {
+            	this.zackR.x = 0;
+            	this.zackDerechaR.x = 0;        	
+            }
+           if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+        	   this.spriteBatchN.setColor(1, 1, 1, 1);
+        	   this.spriteBatchN.begin();
+               this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
+               this.spriteBatchN.end();
+           }       
+        } else {
+        	this.juego.setScreen(new Nivel2(this.juego));
+			this.dispose();
         }
-        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-        	this.zackIzquierda();
-        }
-        if ( (this.zackR.x > 2048 - 64) || (this.zackDerechaR.x > 2048 - 64)) {
-        	this.zackR.x = 2048 - 64;
-        	this.zackDerechaR.x = 2048 - 64;        	
-        }
-        if ( (this.zackR.x < 0) || (this.zackDerechaR.x < 0) ) {
-        	this.zackR.x = 0;
-        	this.zackDerechaR.x = 0;        	
-        }
-       if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-    	   this.spriteBatchN.setColor(1, 1, 1, 1);
-    	   this.spriteBatchN.begin();
-           this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
-           this.spriteBatchN.end();
-       }
+        
+        
 		
 	}
 	
@@ -181,21 +225,37 @@ public class JuegoNivel1 implements Screen {
 		this.juego.batch.end();
 	}
 	
+	
+	/**
+	 * Retorna un número al azar de 0 a 7, el cual será
+	 * la posición de la pregunta y respuesta.
+	 * @return
+	 */
+	public void numeroAzar() {
+		Random rand = new Random();
+		this.azar = rand.nextInt(8);			
+	}
+	
 	/**
 	 * Retorna una pregunta al azar de las base de datos
 	 * @return
 	 */
-	public String pregunta() {	
+	public String pregunta(int posicion) {	
 		Abrir a = new Abrir();
-		this.db = a.abrir();
-		// Tamaño array pregunta
-		int tmp = this.db.getPreguntasSize(1);
-		// Creo número aleatorio
-		Random rand = new Random();
-		int tmp2 = rand.nextInt(tmp);
-		// Pregunta al azar del array preguntas
-		String tmp3 = this.db.getPregunta(1, tmp2);		
-		return tmp3;
+		this.db = a.abrir();		
+		String pregunta = this.db.getPregunta(1, posicion);		
+		return pregunta;
+	}
+	
+	/**
+	 * Retorna una respuesta al azar de las base de datos
+	 * @return
+	 */
+	public String respuesta(int posicion) {	
+		Abrir a = new Abrir();
+		this.db = a.abrir();		
+		String respuesta = this.db.getRespuesta(1, posicion);		
+		return respuesta;
 	}
 
 	@Override

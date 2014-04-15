@@ -23,7 +23,7 @@ public class Nivel1 implements Screen {
 		this.juego = juego;
 		
 		// Cargo la imagen de fondo
-		this.fondoImg = new Texture(Gdx.files.internal("nivel1/nivel1.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("nivel1.png"));
 		
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();

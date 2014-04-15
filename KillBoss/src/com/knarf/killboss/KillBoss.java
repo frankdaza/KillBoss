@@ -13,6 +13,12 @@ public class KillBoss extends Game {
 	public HistoriaValentina historiaValentina;
 	public Mapa mapa;
 	public Nivel1 nivel1;
+	public Nivel2 nivel2;
+//	public Nivel3 nivel3;
+//	public Nivel4 nivel4;
+//	public Nivel5 nivel5;
+//	public NivelFinal nivelFinal;
+//	public GameOver gameOver;	
 	public BitmapFont texto;
 		
 	@Override
