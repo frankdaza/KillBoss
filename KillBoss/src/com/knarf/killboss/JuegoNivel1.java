@@ -33,8 +33,8 @@ public class JuegoNivel1 implements Screen {
 	public Texture fondoImg, AImg, BImg;
 	public Rectangle fondoR, zackR, zackDerechaR, AR, BR;
 	
-	// Sonido cuando pierde
-	Sound auch;
+	// Sonido cuando pierde y gana una pregunta
+	public Sound auch, gana;
 	
 	// Vidas del jugador
 	public int vidas = 3;
@@ -101,6 +101,9 @@ public class JuegoNivel1 implements Screen {
 		
 		// Configuro el sonido cuando pierde una pregunta
 		this.auch = Gdx.audio.newSound(Gdx.files.internal("sounds/auch.mp3"));
+		
+		// Configuro el sonido cuando gana una pregunta
+		this.gana = Gdx.audio.newSound(Gdx.files.internal("sounds/gana.mp3"));
 		
 		// Creo la cámara del juego
 		this.camara = new OrthographicCamera();
@@ -175,8 +178,8 @@ public class JuegoNivel1 implements Screen {
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 250, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 1024, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 1024, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 512, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 512, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -200,6 +203,7 @@ public class JuegoNivel1 implements Screen {
                this.spriteBatchN.end();
            }
            if (this.zackDerechaR.overlaps(AR)) {
+        	   this.gana.play();
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
     		   this.numeroAzar();
     		   this.zackDerechaR.x = 2048 / 2;
@@ -338,6 +342,7 @@ public class JuegoNivel1 implements Screen {
 		this.AImg.dispose();
 		this.BImg.dispose();
 		this.auch.dispose();
+		this.gana.dispose();
 		
 	}
 
