@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -31,6 +32,9 @@ public class JuegoNivel1 implements Screen {
 	public OrthographicCamera camara;
 	public Texture fondoImg, AImg, BImg;
 	public Rectangle fondoR, zackR, zackDerechaR, AR, BR;
+	
+	// Sonido cuando pierde
+	Sound auch;
 	
 	// Vidas del jugador
 	public int vidas = 3;
@@ -94,6 +98,9 @@ public class JuegoNivel1 implements Screen {
 		
 		// Creo la imagen para B
 		this.BImg = new Texture(Gdx.files.internal("B.png"));
+		
+		// Configuro el sonido cuando pierde una pregunta
+		this.auch = Gdx.audio.newSound(Gdx.files.internal("sounds/auch.mp3"));
 		
 		// Creo la cámara del juego
 		this.camara = new OrthographicCamera();
@@ -199,6 +206,7 @@ public class JuegoNivel1 implements Screen {
     		   this.zackR.x = 2048 /2;
            }
            if (this.zackDerechaR.overlaps(BR)) {
+        	   this.auch.play();
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
     		   this.vidas = this.vidas - 1;
     		   this.numeroAzar();
@@ -323,7 +331,13 @@ public class JuegoNivel1 implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		this.walkSheetDerecha.dispose();
+		this.walkSheetIzquierda.dispose();
+		this.zackNormal.dispose();
+		this.fondoImg.dispose();
+		this.AImg.dispose();
+		this.BImg.dispose();
+		this.auch.dispose();
 		
 	}
 

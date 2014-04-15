@@ -3,6 +3,7 @@ package com.knarf.killboss;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +15,7 @@ public class GameOver implements Screen {
 	public Texture fondoImg;
 	public Rectangle fondoR;
 	public OrthographicCamera camara;
-	public int tiempo = 0;
+	public Sound gameOver;
 	
 	/**
 	 * Método constructor
@@ -28,6 +29,9 @@ public class GameOver implements Screen {
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();
 		this.camara.setToOrtho(false, 2048, 1024);
+		
+		// Configuro el sonido de game over
+		this.gameOver = Gdx.audio.newSound(Gdx.files.internal("sounds/gameOver.mp3"));
 		
 		// Creo el rectángulo lógico para el fondo
 		this.fondoR = new Rectangle();
@@ -64,7 +68,7 @@ public class GameOver implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		this.gameOver.play();
 		
 	}
 
