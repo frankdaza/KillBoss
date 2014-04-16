@@ -35,7 +35,7 @@ public class Mapa2 implements Screen {
 		this.juego = juego;
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteDerecha.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePecheraD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -47,7 +47,7 @@ public class Mapa2 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteIzquierda.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpritePecheraI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -67,7 +67,7 @@ public class Mapa2 implements Screen {
 		this.fondoImg = new Texture(Gdx.files.internal("mapa/fondo.png"));
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackNormal.png"));
+		this.zackNormal = new Texture(Gdx.files.internal("zackPechera.png"));
 				
 		// Cargo la imagen de la armadura de las manos
 		this.armaduraManosImg = new Texture(Gdx.files.internal("mapa/armaduraManos.png"));
