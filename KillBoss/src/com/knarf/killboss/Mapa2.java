@@ -25,14 +25,15 @@ public class Mapa2 implements Screen {
     public float stateTime;
     public OrthographicCamera camara;    
     public Rectangle fondoR, zackR, zackDerechaR;
+    public int puntaje = 0;
     
     // Variables para activar los niveles
     public Texture armaduraManosImg, armaduraPiernasImg, cascoImg, escudoImg, espadaImg, bossImg;
     public Rectangle armaduraManosR, armaduraPiernasR, cascoR, escudoR, espadaR, bossR;
-	
-	public Mapa2(final KillBoss juego) {
-		
+        
+	public Mapa2(final KillBoss juego, int puntaje) {		
 		this.juego = juego;
+		this.puntaje = puntaje;
 		
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePecheraD.png"));
@@ -175,8 +176,14 @@ public class Mapa2 implements Screen {
         this.spriteBatch.draw(this.cascoImg, this.cascoR.x, this.cascoR.y);
         this.spriteBatch.draw(this.escudoImg, this.escudoR.x, this.escudoR.y);
         this.spriteBatch.draw(this.espadaImg, this.espadaR.x, this.espadaR.y);
-        this.spriteBatch.draw(this.bossImg, this.bossR.x, this.bossR.y);
-        this.spriteBatch.end();	
+        this.spriteBatch.draw(this.bossImg, this.bossR.x, this.bossR.y);        
+        this.spriteBatch.end();
+        
+        this.juego.batch.begin();
+        this.juego.texto.draw(this.juego.batch, "ESC: Salir", 2048 / 2 - 500, 1010);
+        this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2, 1010);
+        this.juego.texto.draw(this.juego.batch, "F1: Guardar Partida", 2048 / 2 + 500, 1010);
+        this.juego.batch.end();
         
         this.spriteBatchN.begin();
         this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
@@ -203,9 +210,13 @@ public class Mapa2 implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.zackR.overlaps(this.armaduraManosR)) || (this.zackDerechaR.overlaps(this.armaduraManosR)) ) {
-    	   this.juego.setScreen(new Nivel2(this.juego));
+    	   this.juego.setScreen(new Nivel2(this.juego, this.puntaje));
     	   this.dispose();
-       }    
+       }
+       if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+    	   Gdx.app.exit();
+    	   this.dispose();
+       }
        
 	}
 

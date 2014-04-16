@@ -16,12 +16,14 @@ public class GanastePechera implements Screen {
 	public Rectangle fondoR;
 	public OrthographicCamera camara;
 	public Sound gana;
+	public int puntaje = 0;
 	
 	/**
 	 * Método constructor
 	 */
-	public GanastePechera(final KillBoss juego){
+	public GanastePechera(final KillBoss juego, int puntaje){
 		this.juego = juego;
+		this.puntaje = puntaje;
 		
 		// Cargo la imagen de fondo
 		this.fondoImg = new Texture(Gdx.files.internal("ganastePechera.png"));
@@ -51,10 +53,10 @@ public class GanastePechera implements Screen {
 		// Dibulo el fondo
 		this.juego.batch.begin();
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
-		this.juego.batch.end();
+		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Mapa2(this.juego));
+			this.juego.setScreen(new Mapa2(this.juego, this.puntaje));
 			this.dispose();
 		}
 		

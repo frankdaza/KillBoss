@@ -51,9 +51,13 @@ public class JuegoNivel2 implements Screen {
 	// Base de datos
 	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
+	// Puntaje
+	public int puntaje = 0;
 	
-	public JuegoNivel2(final KillBoss juego) {
+	
+	public JuegoNivel2(final KillBoss juego, int puntaje) {
 		this.juego = juego;
+		this.puntaje = puntaje;
 		
 		// Genero el número al azar de la pregunta y respuestas
 		this.numeroAzar();
@@ -220,7 +224,7 @@ public class JuegoNivel2 implements Screen {
            }
         } else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanastePechera(this.juego));
+        		this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
     			this.dispose();    			
         	}
         	else {

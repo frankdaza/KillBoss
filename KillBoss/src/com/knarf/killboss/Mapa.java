@@ -186,7 +186,12 @@ public class Mapa implements Screen {
         this.spriteBatch.draw(this.escudoImg, this.escudoR.x, this.escudoR.y);
         this.spriteBatch.draw(this.espadaImg, this.espadaR.x, this.espadaR.y);
         this.spriteBatch.draw(this.bossImg, this.bossR.x, this.bossR.y);
-        this.spriteBatch.end();	
+        this.spriteBatch.end();
+        
+        this.juego.batch.begin();
+        this.juego.texto.setColor(0, 0, 0, 1);
+		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
+        this.juego.batch.end();
         
         this.spriteBatchN.begin();
         this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
@@ -215,7 +220,11 @@ public class Mapa implements Screen {
        if ( (this.zackR.overlaps(this.armaduraPechoR)) || (this.zackDerechaR.overlaps(this.armaduraPechoR)) ) {
     	   this.juego.setScreen(new Nivel1(this.juego));
     	   this.dispose();
-       }    
+       }   
+       if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+       	Gdx.app.exit();
+       	this.dispose();
+       }
        
 	}
 

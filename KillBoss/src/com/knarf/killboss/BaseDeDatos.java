@@ -528,24 +528,24 @@ public class BaseDeDatos implements Serializable {
 		
 	}
 	
-	/**
-	 * Carga la partida de un jugador.
-	 * @param partida
-	 */
-	public void cargarPartida(int partida) {
-		switch (partida) {
-		case 1:	 this.juego.setScreen(new Nivel2(this.juego));
-				 break;
-		case 2:	 this.juego.setScreen(new Nivel3(this.juego));
-				 break;
-		case 3:	 this.juego.setScreen(new Nivel4(this.juego));
-		 		 break;
-		case 4:	 this.juego.setScreen(new Nivel5(this.juego));
-		 		 break;
-		case 5:	 this.juego.setScreen(new NivelFinal(this.juego));
-		 		 break;
-		}			
-	}
+//	/**
+//	 * Carga la partida de un jugador.
+//	 * @param partida
+//	 */
+//	public void cargarPartida(int partida) {
+//		switch (partida) {
+//		case 1:	 this.juego.setScreen(new Nivel2(this.juego));
+//				 break;
+//		case 2:	 this.juego.setScreen(new Nivel3(this.juego));
+//				 break;
+//		case 3:	 this.juego.setScreen(new Nivel4(this.juego));
+//		 		 break;
+//		case 4:	 this.juego.setScreen(new Nivel5(this.juego));
+//		 		 break;
+//		case 5:	 this.juego.setScreen(new NivelFinal(this.juego));
+//		 		 break;
+//		}			
+//	}
 	
 }
 
