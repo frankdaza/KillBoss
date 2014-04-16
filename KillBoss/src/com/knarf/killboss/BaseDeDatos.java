@@ -519,10 +519,10 @@ public class BaseDeDatos implements Serializable {
 	 * @param puntaje
 	 * @param nivel
 	 */
-	public void guardarPartida(String nombre, int puntaje, int nivel) {
-		this.jugadores.add(0, nombre);
-		this.puntajes.add(0, puntaje);
-		this.nivel.add(0, nivel);		
+	public void guardarPartida(String nombre, int puntaje, int nivel) {		
+		this.jugadores.add(nombre);		
+		this.puntajes.add(puntaje);		
+		this.nivel.add(nivel);		
 	}
 	
 	/**
@@ -532,11 +532,11 @@ public class BaseDeDatos implements Serializable {
 	public void cargarPartida(String nombre) {
 		int posicion = 0;
 		while (posicion < this.jugadores.size()) {			
-			if (nombre == this.jugadores.get(posicion)) {
+			if (nombre.equals(jugadores.get(posicion)) ) {				
 				int puntaje = this.puntajes.get(posicion);
 				int nivel = this.nivel.get(posicion);				
 				switch (nivel) {
-				case 2:	 this.juego.setScreen(new Nivel2(this.juego, puntaje));
+				case 2:	 this.juego.setScreen(new Nivel2(this.juego, puntaje));				
 						 break;
 				case 3:	 this.juego.setScreen(new Nivel3(this.juego, puntaje));
 						 break;				
@@ -545,22 +545,21 @@ public class BaseDeDatos implements Serializable {
 				posicion += 1;
 			}
 		}
+		System.out.println("No coincidió ningún nombre ");
 	}
 	
 	/**
 	 * Imprime la tabla de las partidas de los jugadores guardadas.
-	 * @param nombre
 	 */
-	public void imprimirPartidas(String nombre) {
-		System.out.println("********************************************************************************");
-		System.out.println("**		NOMBRE							PUNTAJE						NIVEL     **");
-		System.out.println("********************************************************************************");
+	public void imprimirPartidas() {
+		System.out.println("****************************");
+		System.out.println("* NOMBRE * PUNTAJE * NIVEL *");
+		System.out.println("****************************");
 		int posicion = 0;
 		while (posicion < this.jugadores.size()) {
-			System.out.println("** " + this.jugadores.get(posicion) + "   " + this.puntajes.get(posicion) + "  " + this.nivel.get(posicion) + " **" );
+			System.out.println("** " + this.jugadores.get(posicion) + " *  " + this.puntajes.get(posicion) + " * " + this.nivel.get(posicion) + " **" );
 			posicion += 1;
 		}
 		
 	}
-	
 }

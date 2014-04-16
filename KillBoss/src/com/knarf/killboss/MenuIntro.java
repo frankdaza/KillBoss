@@ -129,6 +129,11 @@ public class MenuIntro implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
+		if (Gdx.input.isKeyPressed(Keys.F2)) {
+			CargarPartida partida = new CargarPartida(this.juego);			
+			partida.inicio();
+			Gdx.app.exit();
+		}
 		
 	}
 
