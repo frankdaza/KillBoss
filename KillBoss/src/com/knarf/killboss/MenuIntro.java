@@ -125,7 +125,6 @@ public class MenuIntro implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.F10)) {
 			Administrador admin = new Administrador(this.juego);			
 			admin.inicio();
-			//Gdx.app.exit();
 		}
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			Gdx.app.exit();

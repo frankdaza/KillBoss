@@ -13,13 +13,15 @@ public class Nivel3 implements Screen {
 	final KillBoss juego;
 	public Texture fondoImg;
 	public Rectangle fondoR;
-	public OrthographicCamera camara;	
+	public OrthographicCamera camara;
+	public int puntaje = 0;
 	
 	/**
 	 * Método constructor
 	 */
-	public Nivel3(final KillBoss juego){
+	public Nivel3(final KillBoss juego, int puntaje){
 		this.juego = juego;
+		this.puntaje = puntaje;
 		
 		// Cargo la imagen de fondo
 		this.fondoImg = new Texture(Gdx.files.internal("nivel3.png"));
@@ -49,7 +51,7 @@ public class Nivel3 implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new JuegoNivel1(this.juego));
+			this.juego.setScreen(new JuegoNivel2(this.juego, this.puntaje));
 			this.dispose();
 		}
 		

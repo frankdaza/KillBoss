@@ -12,6 +12,8 @@ public class KillBoss extends Game {
 	public HistoriaZack historiaZack;
 	public HistoriaValentina historiaValentina;
 	public Mapa mapa;
+	public Mapa2 mapa2;
+	public Mapa3 mapa3;
 	public Nivel1 nivel1;
 	public Nivel2 nivel2;
 	public Nivel3 nivel3;

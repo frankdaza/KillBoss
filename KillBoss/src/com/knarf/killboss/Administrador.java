@@ -5,13 +5,12 @@ import java.util.Scanner;
 public class Administrador {
 	
 	final KillBoss juego;
+	public boolean salir = true;
+	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	public Administrador(final KillBoss juego) {
 		this.juego = juego;
-	}
-	
-	public boolean salir = true;
-	public BaseDeDatos db = new BaseDeDatos(this.juego);
+	}	
 	
 	@SuppressWarnings("resource")
 	public void inicio() {

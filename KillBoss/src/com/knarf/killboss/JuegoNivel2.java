@@ -63,7 +63,7 @@ public class JuegoNivel2 implements Screen {
 		this.numeroAzar();
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteDerecha.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePecheraD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -75,7 +75,7 @@ public class JuegoNivel2 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteIzquierda.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpritePecheraI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -91,7 +91,7 @@ public class JuegoNivel2 implements Screen {
 		this.stateTime = 0f;
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackNormal.png"));
+		this.zackNormal = new Texture(Gdx.files.internal("zackPechera.png"));
 				
 		
 		// Cargo la imagen del fondo
@@ -228,7 +228,7 @@ public class JuegoNivel2 implements Screen {
         }        
         else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
+        		this.juego.setScreen(new GanasteBrazos(this.juego, this.puntaje));
     			this.dispose();    			
         	}
         	else {

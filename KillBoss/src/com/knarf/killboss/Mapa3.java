@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Mapa2 implements Screen {
+public class Mapa3 implements Screen {
 	
 	final KillBoss juego;
 	
@@ -28,15 +28,15 @@ public class Mapa2 implements Screen {
     public int puntaje = 0;
     
     // Variables para activar los niveles
-    public Texture armaduraManosImg, armaduraPiernasImg, cascoImg, escudoImg, espadaImg, bossImg;
-    public Rectangle armaduraManosR, armaduraPiernasR, cascoR, escudoR, espadaR, bossR;
+    public Texture armaduraPiernasImg, cascoImg, escudoImg, espadaImg, bossImg;
+    public Rectangle armaduraPiernasR, cascoR, escudoR, espadaR, bossR;
         
-	public Mapa2(final KillBoss juego, int puntaje) {		
+	public Mapa3(final KillBoss juego, int puntaje) {		
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePecheraD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteBrazosD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -48,7 +48,7 @@ public class Mapa2 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpritePecheraI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteBrazosI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -68,10 +68,7 @@ public class Mapa2 implements Screen {
 		this.fondoImg = new Texture(Gdx.files.internal("mapa/fondo.png"));
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackPechera.png"));
-				
-		// Cargo la imagen de la armadura de las manos
-		this.armaduraManosImg = new Texture(Gdx.files.internal("mapa/armaduraManos.png"));
+		this.zackNormal = new Texture(Gdx.files.internal("zackBrazos.png"));					
 		
 		// Cargo la imagen de la armadura de las piernas
 		this.armaduraPiernasImg = new Texture(Gdx.files.internal("mapa/armaduraPiernas.png"));
@@ -102,25 +99,17 @@ public class Mapa2 implements Screen {
 		
 		// Creo el rectángulo para zack normal.
 		this.zackR = new Rectangle();
-		this.zackR.x = 350;
+		this.zackR.x = 550;
 		this.zackR.y = 190;
 		this.zackR.width = 64;
 		this.zackR.height = 128;
 		
 		// Creo el rectángulo para zack derecha.
 		this.zackDerechaR = new Rectangle();
-		this.zackDerechaR.x = 350;
+		this.zackDerechaR.x = 550;
 		this.zackDerechaR.y = 190;
 		this.zackDerechaR.width = 64;
-		this.zackDerechaR.height = 128;
-				
-		
-		// Creo el rectángulo para la armadura de las manos
-		this.armaduraManosR = new Rectangle();
-		this.armaduraManosR.x = 550;
-		this.armaduraManosR.y = 200;
-		this.armaduraManosR.width = 64;
-		this.armaduraManosR.height = 64;
+		this.zackDerechaR.height = 128;				
 		
 		// Creo el rectángulo para la armadura de las piernas
 		this.armaduraPiernasR = new Rectangle();
@@ -170,8 +159,7 @@ public class Mapa2 implements Screen {
         this.currentFrameIzquierda = this.walkAnimationIzquierda.getKeyFrame(this.stateTime, true);
         
         this.spriteBatch.begin();        
-        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);           
-        this.spriteBatch.draw(this.armaduraManosImg, this.armaduraManosR.x, this.armaduraManosR.y);
+        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);        
         this.spriteBatch.draw(this.armaduraPiernasImg, this.armaduraPiernasR.x, this.armaduraPiernasR.y);
         this.spriteBatch.draw(this.cascoImg, this.cascoR.x, this.cascoR.y);
         this.spriteBatch.draw(this.escudoImg, this.escudoR.x, this.escudoR.y);
@@ -209,17 +197,13 @@ public class Mapa2 implements Screen {
            this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
            this.spriteBatchN.end();
        }
-       if ( (this.zackR.overlaps(this.armaduraManosR)) || (this.zackDerechaR.overlaps(this.armaduraManosR)) ) {
-    	   this.juego.setScreen(new Nivel2(this.juego, this.puntaje));
+       if ( (this.zackR.overlaps(this.armaduraPiernasR)) || (this.zackDerechaR.overlaps(this.armaduraPiernasR)) ) {
+    	   this.juego.setScreen(new Nivel3(this.juego, this.puntaje));
     	   this.dispose();
        }
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
     	   Gdx.app.exit();
     	   this.dispose();
-       }
-       if (Gdx.input.isKeyPressed(Keys.F1)) {
-    	   GuardarPartida partida = new GuardarPartida(this.juego, this.puntaje, 2);
-    	   partida.inicio();
        }
        
 	}
@@ -285,8 +269,7 @@ public class Mapa2 implements Screen {
 		this.walkSheetDerecha.dispose();
 		this.walkSheetIzquierda.dispose();
 		this.zackNormal.dispose();
-		this.fondoImg.dispose();		
-		this.armaduraManosImg.dispose();
+		this.fondoImg.dispose();				
 		this.armaduraPiernasImg.dispose();
 		this.cascoImg.dispose();
 		this.escudoImg.dispose();

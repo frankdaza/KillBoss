@@ -2,7 +2,6 @@ package com.knarf.killboss;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class BaseDeDatos implements Serializable {
 	
@@ -18,8 +17,15 @@ public class BaseDeDatos implements Serializable {
 	public ArrayList<String> nivel1R = new ArrayList<String>(), nivel2R = new ArrayList<String>(), nivel3R = new ArrayList<String>(), nivel4R = new ArrayList<String>(), nivel5R = new ArrayList<String>(), nivel6R = new ArrayList<String>();
 	public ArrayList<String> nivel1PR = new ArrayList<String>(), nivel2PR = new ArrayList<String>(), nivel3PR = new ArrayList<String>(), nivel4PR = new ArrayList<String>(), nivel5PR = new ArrayList<String>(), nivel6PR = new ArrayList<String>();
 	
-	// Información de los jugadores y niveles en que quedaron.
-	public ArrayList<String> partidas = new ArrayList<String>();
+	// Jugadores
+	public ArrayList<String> jugadores = new ArrayList<String>();
+	
+	// Puntajes
+	public ArrayList<Integer> puntajes = new ArrayList<Integer>();
+	
+	// Nivel
+	public ArrayList<Integer> nivel = new ArrayList<Integer>();
+	
 	
 	public BaseDeDatos(final KillBoss juego) {
 		this.juego = juego;
@@ -508,65 +514,53 @@ public class BaseDeDatos implements Serializable {
 	}
 	
 	/**
-	 * Guarda la partida de un jugador.
+	 * Guarda la partida de un jugador con su nombre, puntaje y nivel.
 	 * @param nombre
+	 * @param puntaje
 	 * @param nivel
 	 */
-	public void guardarPartida(String nombre, int nivel) {
-		String partida = "Nombre: " + nombre + "Nivel: " + nivel ;
-		this.partidas.add(partida);
+	public void guardarPartida(String nombre, int puntaje, int nivel) {
+		this.jugadores.add(0, nombre);
+		this.puntajes.add(0, puntaje);
+		this.nivel.add(0, nivel);		
 	}
 	
 	/**
-	 * Imprime las partidas que hay guardadas en el juego.
+	 * Carga una partida previamente guardada.
+	 * @param nombre
 	 */
-	public void imprimirPartidas() {
-		int pos = 0;
-		for (Iterator<String> i = this.partidas.iterator(); i.hasNext(); ) {
-			System.out.println(pos + " " + i);
+	public void cargarPartida(String nombre) {
+		int posicion = 0;
+		while (posicion < this.jugadores.size()) {			
+			if (nombre == this.jugadores.get(posicion)) {
+				int puntaje = this.puntajes.get(posicion);
+				int nivel = this.nivel.get(posicion);				
+				switch (nivel) {
+				case 2:	 this.juego.setScreen(new Nivel2(this.juego, puntaje));
+						 break;
+				case 3:	 this.juego.setScreen(new Nivel3(this.juego, puntaje));
+						 break;				
+				}
+			} else {
+				posicion += 1;
+			}
+		}
+	}
+	
+	/**
+	 * Imprime la tabla de las partidas de los jugadores guardadas.
+	 * @param nombre
+	 */
+	public void imprimirPartidas(String nombre) {
+		System.out.println("********************************************************************************");
+		System.out.println("**		NOMBRE							PUNTAJE						NIVEL     **");
+		System.out.println("********************************************************************************");
+		int posicion = 0;
+		while (posicion < this.jugadores.size()) {
+			System.out.println("** " + this.jugadores.get(posicion) + "   " + this.puntajes.get(posicion) + "  " + this.nivel.get(posicion) + " **" );
+			posicion += 1;
 		}
 		
 	}
 	
-//	/**
-//	 * Carga la partida de un jugador.
-//	 * @param partida
-//	 */
-//	public void cargarPartida(int partida) {
-//		switch (partida) {
-//		case 1:	 this.juego.setScreen(new Nivel2(this.juego));
-//				 break;
-//		case 2:	 this.juego.setScreen(new Nivel3(this.juego));
-//				 break;
-//		case 3:	 this.juego.setScreen(new Nivel4(this.juego));
-//		 		 break;
-//		case 4:	 this.juego.setScreen(new Nivel5(this.juego));
-//		 		 break;
-//		case 5:	 this.juego.setScreen(new NivelFinal(this.juego));
-//		 		 break;
-//		}			
-//	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

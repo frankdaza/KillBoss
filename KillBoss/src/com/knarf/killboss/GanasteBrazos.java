@@ -56,7 +56,7 @@ public class GanasteBrazos implements Screen {
 		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Mapa2(this.juego, this.puntaje));
+			this.juego.setScreen(new Mapa3(this.juego, this.puntaje));
 			this.dispose();
 		}
 		
