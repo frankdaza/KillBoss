@@ -185,8 +185,8 @@ public class JuegoNivel3 implements Screen {
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 650, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 650, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 256, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 256, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -228,7 +228,7 @@ public class JuegoNivel3 implements Screen {
         }        
         else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanasteBrazos(this.juego, this.puntaje));
+        		this.juego.setScreen(new GanastePiernas(this.juego, this.puntaje));
     			this.dispose();    			
         	}
         	else {

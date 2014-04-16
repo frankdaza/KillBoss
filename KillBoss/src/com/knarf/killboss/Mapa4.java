@@ -28,15 +28,15 @@ public class Mapa4 implements Screen {
     public int puntaje = 0;
     
     // Variables para activar los niveles
-    public Texture armaduraPiernasImg, cascoImg, escudoImg, espadaImg, bossImg;
-    public Rectangle armaduraPiernasR, cascoR, escudoR, espadaR, bossR;
+    public Texture cascoImg, escudoImg, espadaImg, bossImg;
+    public Rectangle cascoR, escudoR, espadaR, bossR;
         
 	public Mapa4(final KillBoss juego, int puntaje) {		
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteBrazosDD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePiernasD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -48,7 +48,7 @@ public class Mapa4 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteBrazosI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpritePiernasI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -68,11 +68,8 @@ public class Mapa4 implements Screen {
 		this.fondoImg = new Texture(Gdx.files.internal("mapa/fondo.png"));
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackBrazos.png"));					
-		
-		// Cargo la imagen de la armadura de las piernas
-		this.armaduraPiernasImg = new Texture(Gdx.files.internal("mapa/armaduraPiernas.png"));
-		
+		this.zackNormal = new Texture(Gdx.files.internal("zackPiernas.png"));					
+	
 		// Cargo la imagen del casco
 		this.cascoImg = new Texture(Gdx.files.internal("mapa/casco.png"));
 		
@@ -99,24 +96,17 @@ public class Mapa4 implements Screen {
 		
 		// Creo el rectángulo para zack normal.
 		this.zackR = new Rectangle();
-		this.zackR.x = 550;
+		this.zackR.x = 750;
 		this.zackR.y = 190;
 		this.zackR.width = 64;
 		this.zackR.height = 128;
 		
 		// Creo el rectángulo para zack derecha.
 		this.zackDerechaR = new Rectangle();
-		this.zackDerechaR.x = 550;
+		this.zackDerechaR.x = 750;
 		this.zackDerechaR.y = 190;
 		this.zackDerechaR.width = 64;
-		this.zackDerechaR.height = 128;				
-		
-		// Creo el rectángulo para la armadura de las piernas
-		this.armaduraPiernasR = new Rectangle();
-		this.armaduraPiernasR.x = 750;
-		this.armaduraPiernasR.y = 200;
-		this.armaduraPiernasR.width = 64;
-		this.armaduraPiernasR.height = 64;
+		this.zackDerechaR.height = 128;							
 		
 		// Creo el rectángulo para el casco
 		this.cascoR = new Rectangle();
@@ -159,8 +149,7 @@ public class Mapa4 implements Screen {
         this.currentFrameIzquierda = this.walkAnimationIzquierda.getKeyFrame(this.stateTime, true);
         
         this.spriteBatch.begin();        
-        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);        
-        this.spriteBatch.draw(this.armaduraPiernasImg, this.armaduraPiernasR.x, this.armaduraPiernasR.y);
+        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);                
         this.spriteBatch.draw(this.cascoImg, this.cascoR.x, this.cascoR.y);
         this.spriteBatch.draw(this.escudoImg, this.escudoR.x, this.escudoR.y);
         this.spriteBatch.draw(this.espadaImg, this.espadaR.x, this.espadaR.y);
@@ -197,7 +186,7 @@ public class Mapa4 implements Screen {
            this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
            this.spriteBatchN.end();
        }
-       if ( (this.zackR.overlaps(this.armaduraPiernasR)) || (this.zackDerechaR.overlaps(this.armaduraPiernasR)) ) {
+       if ( (this.zackR.overlaps(this.cascoR)) || (this.zackDerechaR.overlaps(this.cascoR)) ) {
     	   this.juego.setScreen(new Nivel4(this.juego, this.puntaje));
     	   this.dispose();
        }
@@ -269,8 +258,7 @@ public class Mapa4 implements Screen {
 		this.walkSheetDerecha.dispose();
 		this.walkSheetIzquierda.dispose();
 		this.zackNormal.dispose();
-		this.fondoImg.dispose();				
-		this.armaduraPiernasImg.dispose();
+		this.fondoImg.dispose();						
 		this.cascoImg.dispose();
 		this.escudoImg.dispose();
 		this.espadaImg.dispose();
