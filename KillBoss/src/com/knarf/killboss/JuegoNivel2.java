@@ -165,8 +165,10 @@ public class JuegoNivel2 implements Screen {
 		this.juego.batch.begin();
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
-		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 0, 1024);
-		this.juego.texto.draw(this.juego.batch, "Nivel 2", 1950, 1024);
+		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel 2 - Probabilidad", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
+		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
 		this.juego.batch.draw(this.BImg, this.BR.x, this.BR.y);
 		this.juego.batch.end();
@@ -182,9 +184,9 @@ public class JuegoNivel2 implements Screen {
         	this.posibleRespuesta = this.posibleRespuesta(this.azar);
         	
         	this.juego.batch.begin();
-        	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 250, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 350, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 350, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 650, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 650, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -208,21 +210,23 @@ public class JuegoNivel2 implements Screen {
                this.spriteBatchN.end();
            }
            if (this.zackDerechaR.overlaps(AR)) {
-        	   this.gana.play();
+        	   this.gana.play((float) .4);
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
+        	   this.puntaje += 50;
     		   this.numeroAzar();
     		   this.zackDerechaR.x = 2048 / 2;
     		   this.zackR.x = 2048 /2;
            }
            if (this.zackDerechaR.overlaps(BR)) {
-        	   this.auch.play();
+        	   this.auch.play((float) .4);
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
     		   this.vidas = this.vidas - 1;
     		   this.numeroAzar();
     		   this.zackDerechaR.x = 2048 / 2;
     		   this.zackR.x = 2048 /2;
            }
-        } else {
+        }        
+        else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
         		this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
     			this.dispose();    			
@@ -231,8 +235,11 @@ public class JuegoNivel2 implements Screen {
         		this.juego.setScreen(new GameOver(this.juego));        		
     			this.dispose();
         	}        	
-        }        
-		
+        }
+        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+        	Gdx.app.exit();
+        	this.dispose();
+        }
 	}
 	
 	/**
@@ -279,7 +286,7 @@ public class JuegoNivel2 implements Screen {
 	public String pregunta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String pregunta = this.db.getPregunta(1, posicion);		
+		String pregunta = this.db.getPregunta(2, posicion);		
 		return pregunta;
 	}
 	
@@ -290,7 +297,7 @@ public class JuegoNivel2 implements Screen {
 	public String respuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String respuesta = this.db.getRespuesta(1, posicion);		
+		String respuesta = this.db.getRespuesta(2, posicion);		
 		return respuesta;
 	}
 	
@@ -301,7 +308,7 @@ public class JuegoNivel2 implements Screen {
 	public String posibleRespuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String posibleRespuesta = this.db.getPosibleRespuesta(1, posicion);		
+		String posibleRespuesta = this.db.getPosibleRespuesta(2, posicion);		
 		return posibleRespuesta;
 	}
 

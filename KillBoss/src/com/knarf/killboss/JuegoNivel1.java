@@ -165,7 +165,7 @@ public class JuegoNivel1 implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
-		this.juego.texto.draw(this.juego.batch, "Nivel 1", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel 1 - Lógica", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
