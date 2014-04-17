@@ -49,7 +49,7 @@ public class Nivel1 implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new JuegoNivel1(this.juego));
+			this.juego.setScreen(new JuegoNivel1(this.juego));			
 			this.dispose();
 		}
 		

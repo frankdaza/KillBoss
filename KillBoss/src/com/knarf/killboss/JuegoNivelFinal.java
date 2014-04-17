@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,6 +40,9 @@ public class JuegoNivelFinal implements Screen {
 	// Sonido cuando pierde y gana una pregunta
 	public Sound auch, gana;
 	
+	// Sonido del dragon vuelo y grito
+	public Music dragonGrito, dragonVuelo;
+	
 	// Vidas del jugador
 	public int vidas = 3;	
 	
@@ -48,8 +52,10 @@ public class JuegoNivelFinal implements Screen {
 	public Texture bossImg, llamaImg;
 	public Sound boss;
 	public Array<Rectangle> llamas = new Array<Rectangle>();
+	public Array<Rectangle> dragones = new Array<Rectangle>();
 	public long tiempoUltimaLlama;	
-	
+	public long numeroLlamas = 300;
+	public Rectangle bossR;
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje) {
 		this.juego = juego;
@@ -101,6 +107,18 @@ public class JuegoNivelFinal implements Screen {
 		// Configuro el sonido cuando gana una pregunta
 		this.gana = Gdx.audio.newSound(Gdx.files.internal("sounds/gana.mp3"));
 		
+		// Cargo el sonido del grito del dragón
+		this.dragonGrito = Gdx.audio.newMusic(Gdx.files.internal("sounds/dragonGrito.mp3"));
+		this.dragonGrito.setLooping(true);
+		this.dragonGrito.play();
+		this.dragonGrito.setVolume((float) .3);
+		
+		// Cargo el sonido del vuelo del dragón
+		this.dragonVuelo = Gdx.audio.newMusic(Gdx.files.internal("sounds/dragonVuelo.mp3"));
+		this.dragonVuelo.setLooping(true);
+		this.dragonVuelo.play();
+		
+		
 		// Creo la cámara del juego
 		this.camara = new OrthographicCamera();
 		this.camara.setToOrtho(false, 2048, 1024);
@@ -126,6 +144,14 @@ public class JuegoNivelFinal implements Screen {
 		this.zackDerechaR.width = 64;
 		this.zackDerechaR.height = 128;
 		
+		// Crel el rectángulo para Boss
+		this.bossR = new Rectangle();	
+		this.bossR.x = 1024;
+		this.bossR.y = 1024 - 160;
+		this.bossR.width = 256;
+		this.bossR.height = 256;
+		
+		// Creo la lluvia de llamas en el cielo
 		this.lluviaLlamas();
 											
 	}
@@ -134,13 +160,13 @@ public class JuegoNivelFinal implements Screen {
 	 * Inicia la lluvia de llamas.
 	 */
 	public void lluviaLlamas() {
-		Rectangle llama = new Rectangle();
+		Rectangle llama = new Rectangle();		
 		llama.x = MathUtils.random(0, 2048 - 64);
 		llama.y = 1024;
 		llama.width = 64;
-		llama.height = 64;
+		llama.height = 64;		
 		this.llamas.add(llama);
-		this.tiempoUltimaLlama = TimeUtils.nanoTime();
+		this.tiempoUltimaLlama = TimeUtils.nanoTime();				
 	}
 
 	@Override
@@ -162,14 +188,15 @@ public class JuegoNivelFinal implements Screen {
 		this.juego.texto.draw(this.juego.batch, "Nivel Final - Pelea con boss", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);
+		this.juego.batch.draw(this.bossImg, this.bossR.x, this.bossR.y);
 		// Dibuja las llamas
 		for (Rectangle llama : this.llamas) {
-			this.juego.batch.draw(this.llamaImg, llama.x, llama.y);
-		}
+			this.juego.batch.draw(this.llamaImg, llama.x, llama.y);			
+		}	
 		this.juego.batch.end();
 		
 		this.spriteBatchN.begin();
-        this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
+        this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);        
         this.spriteBatchN.end();
         
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -185,7 +212,7 @@ public class JuegoNivelFinal implements Screen {
             this.spriteBatchN.end();
         }
         // Verifica si necesitamos crear mas llamas
-        if (TimeUtils.nanoTime() - this.tiempoUltimaLlama > 1000000000 ) {
+        if (TimeUtils.nanoTime() - this.tiempoUltimaLlama > 100000000 ) {
         	this.lluviaLlamas();
         }
         // 	move the raindrops, remove any that are beneath the bottom edge of
@@ -194,16 +221,30 @@ public class JuegoNivelFinal implements Screen {
         Iterator<Rectangle> iter = this.llamas.iterator();
         while (iter.hasNext()) {
         	Rectangle llama = iter.next();
-        	llama.y -= 200 * Gdx.graphics.getDeltaTime();
+        	llama.y -= 700 * Gdx.graphics.getDeltaTime();
         	if (llama.y + 64 < 0 ) {
         		iter.remove();
+        		this.numeroLlamas -= 1;
         	}
         	if (llama.overlaps(this.zackR) || llama.overlaps(this.zackDerechaR)) {
-        		this.auch.play((float) .6);
+        		this.puntaje -= 100;
+        		this.vidas -= 1;
+        		this.auch.play((float) .3);
         		iter.remove();
+        		this.numeroLlamas -= 1;
         	}
         }
-        
+        if (this.vidas <= 0) {
+        	this.juego.setScreen(new GameOver(this.juego));
+        	this.dispose();
+        }
+        if (this.numeroLlamas <= 0) {
+        	this.gana.play();
+        	System.out.println("FELICITACIONES GANASTE EL JUEGO!");        	
+        	GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7);
+        	g.inicio();
+        	Gdx.app.exit();
+        }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();
@@ -215,8 +256,9 @@ public class JuegoNivelFinal implements Screen {
 	 */
 	public void zackDerecha() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x += 120 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x += 120 * Gdx.graphics.getDeltaTime();
+		this.zackR.x += 500 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x += 500 * Gdx.graphics.getDeltaTime();
+		this.bossR.x += 500 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameDerecha, this.zackDerechaR.x, this.zackDerechaR.y);
@@ -228,8 +270,9 @@ public class JuegoNivelFinal implements Screen {
 	 */
 	public void zackIzquierda() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x -= 120 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x -= 120 * Gdx.graphics.getDeltaTime();
+		this.zackR.x -= 500 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x -= 500 * Gdx.graphics.getDeltaTime();
+		this.bossR.x -= 500 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameIzquierda, this.zackDerechaR.x, this.zackDerechaR.y);
@@ -272,8 +315,9 @@ public class JuegoNivelFinal implements Screen {
 		this.walkSheetIzquierda.dispose();
 		this.zackNormal.dispose();
 		this.fondoImg.dispose();		
-		this.auch.dispose();
-		this.gana.dispose();
+		this.auch.dispose();		
+		this.dragonGrito.dispose();
+		this.dragonVuelo.dispose();
 		
 	}
 
