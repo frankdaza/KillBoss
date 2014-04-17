@@ -9,7 +9,7 @@ public class Guardar {
 	public void guardar(BaseDeDatos db) {
 		try {			
 			FileOutputStream fileOut =
-			new FileOutputStream("BaseDeDatos.ser");
+			new FileOutputStream("/home/frank/Programming/KillBoss/KillBoss-desktop/BaseDeDatos.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(db);
 			out.close();
