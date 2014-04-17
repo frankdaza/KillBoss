@@ -1,5 +1,7 @@
 package com.knarf.killboss;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
@@ -9,7 +11,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class JuegoNivelFinal implements Screen {
 	
@@ -39,6 +44,11 @@ public class JuegoNivelFinal implements Screen {
 	
 	// Puntaje
 	public int puntaje = 0;
+	
+	public Texture bossImg, llamaImg;
+	public Sound boss;
+	public Array<Rectangle> llamas = new Array<Rectangle>();
+	public long tiempoUltimaLlama;	
 	
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje) {
@@ -75,10 +85,15 @@ public class JuegoNivelFinal implements Screen {
 		
 		// Cargo la imagen de zack normal
 		this.zackNormal = new Texture(Gdx.files.internal("zackArmadura.png"));
-				
-		
+						
 		// Cargo la imagen del fondo
-		this.fondoImg = new Texture(Gdx.files.internal("fondoNiveles.png"));		
+		this.fondoImg = new Texture(Gdx.files.internal("fondoNiveles.png"));
+		
+		// Cargo la imagen de boss
+		this.bossImg = new Texture(Gdx.files.internal("mapa/boss.png"));
+		
+		// Cargo la imagen de la llama
+		this.llamaImg = new Texture(Gdx.files.internal("llama.png"));
 		
 		// Configuro el sonido cuando pierde una pregunta
 		this.auch = Gdx.audio.newSound(Gdx.files.internal("sounds/auch.mp3"));
@@ -109,8 +124,23 @@ public class JuegoNivelFinal implements Screen {
 		this.zackDerechaR.x = 1024;
 		this.zackDerechaR.y = 190;
 		this.zackDerechaR.width = 64;
-		this.zackDerechaR.height = 128;	
-										
+		this.zackDerechaR.height = 128;
+		
+		this.lluviaLlamas();
+											
+	}
+	
+	/**
+	 * Inicia la lluvia de llamas.
+	 */
+	public void lluviaLlamas() {
+		Rectangle llama = new Rectangle();
+		llama.x = MathUtils.random(0, 2048 - 64);
+		llama.y = 1024;
+		llama.width = 64;
+		llama.height = 64;
+		this.llamas.add(llama);
+		this.tiempoUltimaLlama = TimeUtils.nanoTime();
 	}
 
 	@Override
@@ -131,7 +161,11 @@ public class JuegoNivelFinal implements Screen {
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
 		this.juego.texto.draw(this.juego.batch, "Nivel Final - Pelea con boss", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
-		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
+		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);
+		// Dibuja las llamas
+		for (Rectangle llama : this.llamas) {
+			this.juego.batch.draw(this.llamaImg, llama.x, llama.y);
+		}
 		this.juego.batch.end();
 		
 		this.spriteBatchN.begin();
@@ -150,6 +184,26 @@ public class JuegoNivelFinal implements Screen {
             this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
             this.spriteBatchN.end();
         }
+        // Verifica si necesitamos crear mas llamas
+        if (TimeUtils.nanoTime() - this.tiempoUltimaLlama > 1000000000 ) {
+        	this.lluviaLlamas();
+        }
+        // 	move the raindrops, remove any that are beneath the bottom edge of
+        // the screen or that hit the bucket. In the later case we play back
+        // a sound effect as well.
+        Iterator<Rectangle> iter = this.llamas.iterator();
+        while (iter.hasNext()) {
+        	Rectangle llama = iter.next();
+        	llama.y -= 200 * Gdx.graphics.getDeltaTime();
+        	if (llama.y + 64 < 0 ) {
+        		iter.remove();
+        	}
+        	if (llama.overlaps(this.zackR) || llama.overlaps(this.zackDerechaR)) {
+        		this.auch.play((float) .6);
+        		iter.remove();
+        	}
+        }
+        
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();
