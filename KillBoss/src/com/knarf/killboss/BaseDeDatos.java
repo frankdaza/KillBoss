@@ -3,9 +3,11 @@ package com.knarf.killboss;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
 public class BaseDeDatos implements Serializable {
 	
-	public KillBoss juego;
+	final KillBoss juego;
 	
 	/**
 	 * ID único de serialización
@@ -25,11 +27,7 @@ public class BaseDeDatos implements Serializable {
 	
 	// Nivel
 	public ArrayList<Integer> nivel = new ArrayList<Integer>();
-	
-	// Juegos
-	public ArrayList<KillBoss> juegos = new ArrayList<KillBoss>();
-	
-	
+		
 	public BaseDeDatos(final KillBoss juego) {
 		this.juego = juego;
 	}
@@ -524,14 +522,9 @@ public class BaseDeDatos implements Serializable {
 	 */
 	public void guardarPartida(String nombre, int puntaje, int nivel, final KillBoss juego) {
 		System.out.println("Ingresa a la función guardar partida en la DB");
-		this.jugadores.add(nombre);
-		System.out.println("Guarda el nombre en la DB");
-		this.puntajes.add(puntaje);
-		System.out.println("Guarda el puntaje en la DB");
-		this.nivel.add(nivel);
-		System.out.println("Guarda el nivel en la DB");
-		this.juegos.add(this.juego);
-		System.out.println("Guarda el juego en la DB");
+		this.jugadores.add(nombre);		
+		this.puntajes.add(puntaje);		
+		this.nivel.add(nivel);		
 	}
 	
 	/**
@@ -543,12 +536,16 @@ public class BaseDeDatos implements Serializable {
 		while (posicion < this.jugadores.size()) {			
 			if (nombre.equals(jugadores.get(posicion)) ) {				
 				int puntaje = this.puntajes.get(posicion);
-				int nivel = this.nivel.get(posicion);
-				KillBoss j = this.juegos.get(posicion);
-				switch (nivel) {
-				case 2:	 this.juego.setScreen(new Nivel2(j, puntaje));				
-						 break;
-				case 3:	 this.juego.setScreen(new Nivel3(j, puntaje));
+				int nivel = this.nivel.get(posicion);				
+				switch (nivel) {				
+				case 2:	 KillBoss game = new KillBoss();
+						 this.juego.setScreen(new Nivel2(game, puntaje));			 		    	    
+						 System.out.println("Crea un nuevo mapa");
+						 posicion = this.jugadores.size();
+						 break;						 
+				case 3:	 System.out.println("Case 3 cargarPartida");	 
+						 this.juego.setScreen(new Nivel3(this.juego, puntaje));
+						 posicion = this.jugadores.size();
 						 break;				
 				}
 			} else {

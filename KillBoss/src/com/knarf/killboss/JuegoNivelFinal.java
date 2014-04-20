@@ -243,7 +243,8 @@ public class JuegoNivelFinal implements Screen {
         	System.out.println("FELICITACIONES GANASTE EL JUEGO!");        	
         	GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7);
         	g.inicio();
-        	Gdx.app.exit();
+        	this.juego.setScreen(new MenuIntro(this.juego));
+        	this.dispose();
         }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();

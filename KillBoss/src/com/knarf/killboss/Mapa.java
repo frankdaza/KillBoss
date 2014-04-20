@@ -218,7 +218,8 @@ public class Mapa implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.zackR.overlaps(this.armaduraPechoR)) || (this.zackDerechaR.overlaps(this.armaduraPechoR)) ) {
-    	   this.juego.setScreen(new Nivel1(this.juego));
+    	   //this.juego.setScreen(new Nivel1(this.juego));
+    	   this.juego.setScreen(new NivelFinal(this.juego, 5543));
     	   this.dispose();
        }   
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
