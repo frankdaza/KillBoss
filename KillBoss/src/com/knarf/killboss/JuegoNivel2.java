@@ -182,11 +182,13 @@ public class JuegoNivel2 implements Screen {
         	this.pregunta = this.pregunta(this.azar);
         	this.respuesta = this.respuesta(this.azar);        	
         	this.posibleRespuesta = this.posibleRespuesta(this.azar);
+        	String letra1 = this.parLetra(this.azar);
+        	String letra2 = this.imparLetra(this.azar);
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.respuesta, 2048 / 2 - 650, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.posibleRespuesta, 2048 / 2 - 650, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, "* " + letra1 + " - "  + this.respuesta, 2048 / 2 - 650, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* " + letra2 + " - " + this.posibleRespuesta, 2048 / 2 - 650, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -209,7 +211,7 @@ public class JuegoNivel2 implements Screen {
                this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
                this.spriteBatchN.end();
            }
-           if (this.zackDerechaR.overlaps(AR)) {
+           if (this.zackDerechaR.overlaps(AR) && letra1 == "A") {
         	   this.gana.play((float) .4);
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
         	   this.puntaje += 50;
@@ -217,10 +219,26 @@ public class JuegoNivel2 implements Screen {
     		   this.zackDerechaR.x = 2048 / 2;
     		   this.zackR.x = 2048 /2;
            }
-           if (this.zackDerechaR.overlaps(BR)) {
+           if (this.zackDerechaR.overlaps(AR) && letra1 == "B") {
         	   this.auch.play((float) .4);
         	   this.numeroPreguntas = this.numeroPreguntas - 1;
     		   this.vidas = this.vidas - 1;
+    		   this.numeroAzar();
+    		   this.zackDerechaR.x = 2048 / 2;
+    		   this.zackR.x = 2048 /2;
+           }
+           if (this.zackDerechaR.overlaps(BR) && letra1 == "A") {
+        	   this.auch.play((float) .4);
+        	   this.numeroPreguntas = this.numeroPreguntas - 1;
+    		   this.vidas = this.vidas - 1;
+    		   this.numeroAzar();
+    		   this.zackDerechaR.x = 2048 / 2;
+    		   this.zackR.x = 2048 /2;
+           }
+           if (this.zackDerechaR.overlaps(BR) && letra1 == "B") {
+        	   this.gana.play((float) .4);
+        	   this.numeroPreguntas = this.numeroPreguntas - 1;
+        	   this.puntaje += 50;
     		   this.numeroAzar();
     		   this.zackDerechaR.x = 2048 / 2;
     		   this.zackR.x = 2048 /2;
@@ -247,8 +265,8 @@ public class JuegoNivel2 implements Screen {
 	 */
 	public void zackDerecha() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x += 120 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x += 120 * Gdx.graphics.getDeltaTime();
+		this.zackR.x += 200 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x += 200 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameDerecha, this.zackDerechaR.x, this.zackDerechaR.y);
@@ -260,8 +278,8 @@ public class JuegoNivel2 implements Screen {
 	 */
 	public void zackIzquierda() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x -= 120 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x -= 120 * Gdx.graphics.getDeltaTime();
+		this.zackR.x -= 200 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x -= 200 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameIzquierda, this.zackDerechaR.x, this.zackDerechaR.y);
@@ -310,6 +328,36 @@ public class JuegoNivel2 implements Screen {
 		this.db = a.abrir();		
 		String posibleRespuesta = this.db.getPosibleRespuesta(2, posicion);		
 		return posibleRespuesta;
+	}
+	
+	/**
+	 * Retorna la letra A si el número que ingresa es par,
+	 * retorna la letra B si el número que ingresa es impar.
+	 * @param numero
+	 * @return
+	 */
+	public String parLetra(int numero) {
+		if (numero % 2 == 0) {
+			return "A";
+		}
+		else {
+			return "B";
+		}		
+	}
+	
+	/**
+	 * Retorna la letra B si el número que ingresa es par,
+	 * retorna la letra A si el número que ingresa es impar.
+	 * @param numero
+	 * @return
+	 */
+	public String imparLetra(int numero) {
+		if (numero % 2 == 0) {
+			return "B";
+		}
+		else {
+			return "A";
+		}		
 	}
 
 	@Override

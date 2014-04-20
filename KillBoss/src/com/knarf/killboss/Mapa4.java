@@ -194,6 +194,10 @@ public class Mapa4 implements Screen {
     	   Gdx.app.exit();
     	   this.dispose();
        }
+       if (Gdx.input.isKeyPressed(Keys.F1)) {
+    	   GuardarPartida partida = new GuardarPartida(this.juego, this.puntaje, 4);
+    	   partida.inicio();
+       }
        
 	}
 
