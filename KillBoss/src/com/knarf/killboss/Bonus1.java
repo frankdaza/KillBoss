@@ -85,8 +85,7 @@ public class Bonus1 implements Screen {
 		
 		// Cargo la imagen de la pocima
 		this.pocimaImg = new Texture(Gdx.files.internal("pocima.png"));
-		
-		
+				
 		// Creo la cámara del juego
 		this.camara = new OrthographicCamera();
 		this.camara.setToOrtho(false, 2048, 1024);
@@ -199,12 +198,11 @@ public class Bonus1 implements Screen {
         		this.numeroPocimasJugador -= 1;
         	}
         }       
-        if (this.numeroPocimasJugador == 0) {        	        	  
-        	System.out.println("Ganaste un poder de pócima!");
-        	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
+        if (this.numeroPocimasJugador == 0) {        	        	          	
+        	this.juego.setScreen(new GanastePocima(this.juego, this.puntaje));
         }
         if (this.numeroPocimas == 0) {
-        	this.juego.setScreen(new Mapa2(this.juego, this.puntaje));
+        	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
         }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
