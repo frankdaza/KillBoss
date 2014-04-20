@@ -41,8 +41,8 @@ public class Bonus1 implements Screen {
 	public Texture pocimaImg;	
 	public Array<Rectangle> pocimas = new Array<Rectangle>();	
 	public long tiempoUltimaPocima;	
-	public int numeroPocimas = 400;
-	public int numeroPocimasJugador = 30;
+	public int numeroPocimas = 50;
+	public int numeroPocimasJugador = 10;
 	public Rectangle pocimaR;
 	
 	public Bonus1(final KillBoss juego, int puntaje) {
@@ -179,7 +179,7 @@ public class Bonus1 implements Screen {
             this.spriteBatchN.end();
         }
         // Verifica si necesitamos crear mas llamas
-        if (TimeUtils.nanoTime() - this.tiempoUltimaPocima > 100000000 ) {
+        if (TimeUtils.nanoTime() - this.tiempoUltimaPocima > 1000000000 ) {
         	this.lluviaPocimas();
         }
         // 	move the raindrops, remove any that are beneath the bottom edge of
@@ -188,7 +188,7 @@ public class Bonus1 implements Screen {
         Iterator<Rectangle> iter = this.pocimas.iterator();
         while (iter.hasNext()) {
         	Rectangle p2 = iter.next();
-        	p2.y -= 700 * Gdx.graphics.getDeltaTime();
+        	p2.y -= 1200 * Gdx.graphics.getDeltaTime();
         	if (p2.y + 64 < 0 ) {
         		iter.remove();
         		this.numeroPocimas -= 1;
