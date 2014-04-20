@@ -245,7 +245,10 @@ public class JuegoNivel1 implements Screen {
            
         }        
         else {
-        	if (this.numeroPreguntas == 0 && this.vidas > 0) {
+        	if (this.numeroPreguntas == 0 && this.vidas == 3) {
+        		this.juego.setScreen(new Bonus1(this.juego, this.puntaje));
+        	}
+        	else if (this.numeroPreguntas == 0 && ( this.vidas < 3 && this.vidas > 0 ) ) {
         		this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
     			this.dispose();    			
         	}
