@@ -53,7 +53,7 @@ public class GuardarPartida {
 		String nombre = op.nextLine();
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
-		this.db.guardarPartida(nombre, this.puntaje, this.nivel);
+		this.db.guardarPartida(nombre, this.puntaje, this.nivel, this.juego);
 		Guardar g = new Guardar();
 		g.guardar(this.db);
 	}
