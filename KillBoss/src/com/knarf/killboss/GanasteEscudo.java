@@ -3,28 +3,33 @@ package com.knarf.killboss;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Nivel5 implements Screen {
+public class GanasteEscudo implements Screen {
 	
 	final KillBoss juego;
 	public Texture fondoImg;
 	public Rectangle fondoR;
 	public OrthographicCamera camara;
+	public Sound gana;
 	public int puntaje = 0;
 	
 	/**
 	 * Método constructor
 	 */
-	public Nivel5(final KillBoss juego, int puntaje){
+	public GanasteEscudo(final KillBoss juego, int puntaje){
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
 		// Cargo la imagen de fondo
-		this.fondoImg = new Texture(Gdx.files.internal("nivel5.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("ganasteEscudo.png"));
+		
+		// Cargo la música de ganar
+		this.gana = Gdx.audio.newSound(Gdx.files.internal("sounds/gana.mp3"));		
 		
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();
@@ -48,10 +53,10 @@ public class Nivel5 implements Screen {
 		// Dibulo el fondo
 		this.juego.batch.begin();
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
-		this.juego.batch.end();
+		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new JuegoNivel5(this.juego, this.puntaje));
+			this.juego.setScreen(new Mapa7(this.juego, this.puntaje));
 			this.dispose();
 		}
 		
@@ -67,7 +72,7 @@ public class Nivel5 implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		this.gana.play();
 		
 	}
 
@@ -92,6 +97,7 @@ public class Nivel5 implements Screen {
 	@Override
 	public void dispose() {
 		this.fondoImg.dispose();
+		this.gana.dispose();
 		
 	}
 

@@ -187,7 +187,7 @@ public class Mapa5 implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.zackR.overlaps(this.cascoR)) || (this.zackDerechaR.overlaps(this.cascoR)) ) {
-    	   this.juego.setScreen(new Nivel4(this.juego, this.puntaje));
+    	   this.juego.setScreen(new Nivel5(this.juego, this.puntaje));
     	   this.dispose();
        }
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {

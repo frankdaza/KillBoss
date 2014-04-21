@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-public class JuegoNivel4 implements Screen {
+public class JuegoNivel5 implements Screen {
 	
 	final KillBoss juego;
 	
@@ -55,7 +55,7 @@ public class JuegoNivel4 implements Screen {
 	public int puntaje = 0;
 	
 	
-	public JuegoNivel4(final KillBoss juego, int puntaje) {
+	public JuegoNivel5(final KillBoss juego, int puntaje) {
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
@@ -63,7 +63,7 @@ public class JuegoNivel4 implements Screen {
 		this.numeroAzar();
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpritePiernasD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -75,7 +75,7 @@ public class JuegoNivel4 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpritePiernasI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteCascoI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -91,7 +91,7 @@ public class JuegoNivel4 implements Screen {
 		this.stateTime = 0f;
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackPiernas.png"));
+		this.zackNormal = new Texture(Gdx.files.internal("zackCasco.png"));
 				
 		
 		// Cargo la imagen del fondo
@@ -166,7 +166,7 @@ public class JuegoNivel4 implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
-		this.juego.texto.draw(this.juego.batch, "Nivel 4 - Programación", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel 5 - Cálculo Integral", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
@@ -246,7 +246,7 @@ public class JuegoNivel4 implements Screen {
         }        
         else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanasteCasco(this.juego, this.puntaje));
+        		this.juego.setScreen(new GanasteEscudo(this.juego, this.puntaje));
     			this.dispose();    			
         	}
         	else {
@@ -304,7 +304,7 @@ public class JuegoNivel4 implements Screen {
 	public String pregunta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String pregunta = this.db.getPregunta(4, posicion);		
+		String pregunta = this.db.getPregunta(5, posicion);		
 		return pregunta;
 	}
 	
@@ -315,7 +315,7 @@ public class JuegoNivel4 implements Screen {
 	public String respuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String respuesta = this.db.getRespuesta(4, posicion);		
+		String respuesta = this.db.getRespuesta(5, posicion);		
 		return respuesta;
 	}
 	
@@ -326,7 +326,7 @@ public class JuegoNivel4 implements Screen {
 	public String posibleRespuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String posibleRespuesta = this.db.getPosibleRespuesta(4, posicion);		
+		String posibleRespuesta = this.db.getPosibleRespuesta(5, posicion);		
 		return posibleRespuesta;
 	}
 	

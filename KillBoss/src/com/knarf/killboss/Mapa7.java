@@ -36,7 +36,7 @@ public class Mapa7 implements Screen {
 		this.puntaje = puntaje;
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteArmaduraD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -48,7 +48,7 @@ public class Mapa7 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteCascoI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteArmaduraI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;

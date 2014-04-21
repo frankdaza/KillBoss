@@ -16,12 +16,14 @@ public class KillBoss extends Game {
 	public Mapa3 mapa3;
 	public Mapa4 mapa4;
 	public Mapa5 mapa5;
+	public Mapa6 mapa6;
 	public Mapa7 mapa7;
 	public Nivel1 nivel1;
 	public Nivel2 nivel2;
 	public Nivel3 nivel3;
 	public Nivel4 nivel4;
 	public Nivel5 nivel5;
+	public Nivel6 nivel6;
 	public NivelFinal nivelFinal;
 	public GameOver gameOver;	
 	public BitmapFont texto;

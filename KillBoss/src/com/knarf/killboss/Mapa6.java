@@ -176,7 +176,7 @@ public class Mapa6 implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.zackR.overlaps(this.escudoR)) || (this.zackDerechaR.overlaps(this.escudoR)) ) {
-    	   this.juego.setScreen(new Nivel5(this.juego, this.puntaje));
+    	   this.juego.setScreen(new Nivel6(this.juego, this.puntaje));
     	   this.dispose();
        }
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {

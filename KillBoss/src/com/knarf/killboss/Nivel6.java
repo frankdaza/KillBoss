@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Nivel5 implements Screen {
+public class Nivel6 implements Screen {
 	
 	final KillBoss juego;
 	public Texture fondoImg;
@@ -19,12 +19,12 @@ public class Nivel5 implements Screen {
 	/**
 	 * Método constructor
 	 */
-	public Nivel5(final KillBoss juego, int puntaje){
+	public Nivel6(final KillBoss juego, int puntaje){
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
 		// Cargo la imagen de fondo
-		this.fondoImg = new Texture(Gdx.files.internal("nivel5.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("nivel6.png"));
 		
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();
@@ -51,7 +51,7 @@ public class Nivel5 implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new JuegoNivel5(this.juego, this.puntaje));
+			this.juego.setScreen(new JuegoNivelFinal(this.juego, this.puntaje));
 			this.dispose();
 		}
 		
