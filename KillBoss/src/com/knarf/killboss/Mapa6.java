@@ -28,15 +28,15 @@ public class Mapa6 implements Screen {
     public int puntaje = 0;
     
     // Variables para activar los niveles
-    public Texture escudoImg, espadaImg, bossImg;
-    public Rectangle escudoR, espadaR, bossR;
+    public Texture espadaImg, bossImg;
+    public Rectangle espadaR, bossR;
         
 	public Mapa6(final KillBoss juego, int puntaje) {		
 		this.juego = juego;
 		this.puntaje = puntaje;
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -48,7 +48,7 @@ public class Mapa6 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteCascoI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -68,11 +68,8 @@ public class Mapa6 implements Screen {
 		this.fondoImg = new Texture(Gdx.files.internal("mapa/fondo.png"));
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackCasco.png"));					
-	
-		// Cargo la imagen del escudo
-		this.escudoImg = new Texture(Gdx.files.internal("mapa/escudo.png"));
-		
+		this.zackNormal = new Texture(Gdx.files.internal("zackEscudo.png"));					
+			
 		// Cargo la imagen de la espada
 		this.espadaImg = new Texture(Gdx.files.internal("mapa/espada.png"));
 		
@@ -93,24 +90,17 @@ public class Mapa6 implements Screen {
 		
 		// Creo el rectángulo para zack normal.
 		this.zackR = new Rectangle();
-		this.zackR.x = 950;
+		this.zackR.x = 1150;
 		this.zackR.y = 190;
 		this.zackR.width = 64;
 		this.zackR.height = 128;
 		
 		// Creo el rectángulo para zack derecha.
 		this.zackDerechaR = new Rectangle();
-		this.zackDerechaR.x = 950;
+		this.zackDerechaR.x = 1150;
 		this.zackDerechaR.y = 190;
 		this.zackDerechaR.width = 64;
-		this.zackDerechaR.height = 128;									
-		
-		// Creo el rectángulo para el escudo
-		this.escudoR = new Rectangle();
-		this.escudoR.x = 1150;
-		this.escudoR.y = 200;
-		this.escudoR.width = 64;
-		this.escudoR.height = 64;
+		this.zackDerechaR.height = 128;										
 		
 		// Creo el rectángulo para la espada
 		this.espadaR = new Rectangle();
@@ -139,8 +129,7 @@ public class Mapa6 implements Screen {
         this.currentFrameIzquierda = this.walkAnimationIzquierda.getKeyFrame(this.stateTime, true);
         
         this.spriteBatch.begin();        
-        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);                        
-        this.spriteBatch.draw(this.escudoImg, this.escudoR.x, this.escudoR.y);
+        this.spriteBatch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);                                
         this.spriteBatch.draw(this.espadaImg, this.espadaR.x, this.espadaR.y);
         this.spriteBatch.draw(this.bossImg, this.bossR.x, this.bossR.y);        
         this.spriteBatch.end();
@@ -175,7 +164,7 @@ public class Mapa6 implements Screen {
            this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
            this.spriteBatchN.end();
        }
-       if ( (this.zackR.overlaps(this.escudoR)) || (this.zackDerechaR.overlaps(this.escudoR)) ) {
+       if ( (this.zackR.overlaps(this.espadaR)) || (this.zackDerechaR.overlaps(this.espadaR)) ) {
     	   this.juego.setScreen(new Nivel6(this.juego, this.puntaje));
     	   this.dispose();
        }
@@ -251,8 +240,7 @@ public class Mapa6 implements Screen {
 		this.walkSheetDerecha.dispose();
 		this.walkSheetIzquierda.dispose();
 		this.zackNormal.dispose();
-		this.fondoImg.dispose();								
-		this.escudoImg.dispose();
+		this.fondoImg.dispose();										
 		this.espadaImg.dispose();
 		this.bossImg.dispose();
 	}

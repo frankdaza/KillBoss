@@ -24,7 +24,7 @@ public class Nivel6 implements Screen {
 		this.puntaje = puntaje;
 		
 		// Cargo la imagen de fondo
-		this.fondoImg = new Texture(Gdx.files.internal("nivel6.png"));
+		this.fondoImg = new Texture(Gdx.files.internal("nivel5.png"));
 		
 		// Configuro la cámara
 		this.camara = new OrthographicCamera();

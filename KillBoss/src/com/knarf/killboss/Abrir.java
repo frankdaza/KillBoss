@@ -16,7 +16,7 @@ public class Abrir {
 	
 	public BaseDeDatos abrir() {
 		try {			
-			FileInputStream fileIn = new FileInputStream("/home/frank/Programming/KillBoss/KillBoss-desktop/BaseDeDatos.ser");
+			FileInputStream fileIn = new FileInputStream("BaseDeDatos.ser");
 	        ObjectInputStream in = new ObjectInputStream(fileIn);
 	        this.db = (BaseDeDatos) in.readObject();
 	        in.close();
