@@ -56,7 +56,7 @@ public class GanasteEscudo implements Screen {
 		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Mapa7(this.juego, this.puntaje));
+			this.juego.setScreen(new Mapa6(this.juego, this.puntaje));
 			this.dispose();
 		}
 		

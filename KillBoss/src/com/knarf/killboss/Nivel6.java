@@ -51,7 +51,7 @@ public class Nivel6 implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new JuegoNivelFinal(this.juego, this.puntaje));
+			this.juego.setScreen(new JuegoNivel6(this.juego, this.puntaje));
 			this.dispose();
 		}
 		
