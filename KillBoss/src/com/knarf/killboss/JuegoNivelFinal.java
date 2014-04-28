@@ -54,7 +54,7 @@ public class JuegoNivelFinal implements Screen {
 	public Array<Rectangle> llamas = new Array<Rectangle>();
 	public Array<Rectangle> dragones = new Array<Rectangle>();
 	public long tiempoUltimaLlama;	
-	public long numeroLlamas = 300;
+	public long numeroLlamas = 200;
 	public Rectangle bossR;
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje) {
