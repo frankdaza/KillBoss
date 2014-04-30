@@ -302,7 +302,7 @@ public class JuegoNivel6 implements Screen {
 	public String pregunta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String pregunta = this.db.getPregunta(5, posicion);		
+		String pregunta = this.db.getPregunta(6, posicion);		
 		return pregunta;
 	}
 	
@@ -313,7 +313,7 @@ public class JuegoNivel6 implements Screen {
 	public String respuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String respuesta = this.db.getRespuesta(5, posicion);		
+		String respuesta = this.db.getRespuesta(6, posicion);		
 		return respuesta;
 	}
 	
@@ -324,7 +324,7 @@ public class JuegoNivel6 implements Screen {
 	public String posibleRespuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String posibleRespuesta = this.db.getPosibleRespuesta(5, posicion);		
+		String posibleRespuesta = this.db.getPosibleRespuesta(6, posicion);		
 		return posibleRespuesta;
 	}
 	
