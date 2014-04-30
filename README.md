@@ -1,5 +1,7 @@
 ##	KILL BOSS - LA AMENAZA DE LOS INGENIEROS
 #	Miniproyecto videojuego
+Juego realizado en java con el framework LibGDX y el jdk 7.
+
 Zack  y  Valentina,  son  estudiantes  de  primer  semestre de Ingeniería de Sistemas, los cuales tienen
 como  objetivo  obtener  su  título  profesional.  Para  lograrlo deberán vivir toda una aventura, donde
 aprenderán  los temas específicos de cada nivel ( lógica, matemáticas, probabilidad, entre otros ) y
@@ -23,3 +25,4 @@ para  poder  ir  aumentando de nivel e ir ganando esas habilidades, las cuales a
 principal  lograr  su objetivo. El juego  contará con una cuenta de administrador,  en la cual se puede
 alimentar  el  banco  de  preguntas  que  se  realizan  a  los  personajes,  para  evitar  monotonía  en  el
 juego.
+
