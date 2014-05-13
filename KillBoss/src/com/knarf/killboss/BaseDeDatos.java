@@ -569,4 +569,13 @@ public class BaseDeDatos implements Serializable {
 		}
 		
 	}
+	
+	/**
+	 * Borrar todas las partidas guardadas en la base de datos.
+	 */
+	public void borrarPartidas() {
+		this.jugadores = new ArrayList<String>();
+		this.puntajes = new ArrayList<Integer>();
+		this.nivel = new ArrayList<Integer>();
+	}
 }
