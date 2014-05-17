@@ -44,10 +44,10 @@ public class JuegoNivelFinal implements Screen {
 	public Music dragonGrito, dragonVuelo;
 	
 	// Vidas del jugador
-	public int vidas = 3;	
+	public int vidas;	
 	
 	// Puntaje
-	public int puntaje = 0;
+	public int puntaje;
 	
 	public Texture bossImg, llamaImg;
 	public Sound boss;
@@ -57,9 +57,10 @@ public class JuegoNivelFinal implements Screen {
 	public long numeroLlamas = 200;
 	public Rectangle bossR;
 	
-	public JuegoNivelFinal(final KillBoss juego, int puntaje) {
+	public JuegoNivelFinal(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas + 1;
 			
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));

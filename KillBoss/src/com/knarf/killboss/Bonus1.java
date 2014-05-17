@@ -44,10 +44,12 @@ public class Bonus1 implements Screen {
 	public int numeroPocimas = 50;
 	public int numeroPocimasJugador = 10;
 	public Rectangle pocimaR;
+	public int vidas;
 	
-	public Bonus1(final KillBoss juego, int puntaje) {
+	public Bonus1(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas;
 			
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteDerecha.png"));
@@ -199,10 +201,10 @@ public class Bonus1 implements Screen {
         	}
         }       
         if (this.numeroPocimasJugador == 0) {        	        	          	
-        	this.juego.setScreen(new GanastePocima(this.juego, this.puntaje));
+        	this.juego.setScreen(new GanastePocima(this.juego, this.puntaje, this.vidas));
         }
         if (this.numeroPocimas == 0) {
-        	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje));
+        	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje, this.vidas));
         }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();

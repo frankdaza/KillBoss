@@ -3,8 +3,6 @@ package com.knarf.killboss;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
-
 public class BaseDeDatos implements Serializable {
 	
 	final KillBoss juego;
@@ -532,27 +530,27 @@ public class BaseDeDatos implements Serializable {
 	 * @param nombre
 	 */
 	public void cargarPartida(String nombre) {
-		int posicion = 0;
-		while (posicion < this.jugadores.size()) {			
-			if (nombre.equals(jugadores.get(posicion)) ) {				
-				int puntaje = this.puntajes.get(posicion);
-				int nivel = this.nivel.get(posicion);				
-				switch (nivel) {				
-				case 2:	 KillBoss game = new KillBoss();
-						 this.juego.setScreen(new Nivel2(game, puntaje));			 		    	    
-						 System.out.println("Crea un nuevo mapa");
-						 posicion = this.jugadores.size();
-						 break;						 
-				case 3:	 System.out.println("Case 3 cargarPartida");	 
-						 this.juego.setScreen(new Nivel3(this.juego, puntaje));
-						 posicion = this.jugadores.size();
-						 break;				
-				}
-			} else {
-				posicion += 1;
-			}
-		}
-		System.out.println("No coincidió ningún nombre ");
+//		int posicion = 0;
+//		while (posicion < this.jugadores.size()) {			
+//			if (nombre.equals(jugadores.get(posicion)) ) {				
+//				int puntaje = this.puntajes.get(posicion);
+//				int nivel = this.nivel.get(posicion);				
+//				switch (nivel) {				
+//				case 2:	 KillBoss game = new KillBoss();
+//						 this.juego.setScreen(new Nivel2(game, puntaje));			 		    	    
+//						 System.out.println("Crea un nuevo mapa");
+//						 posicion = this.jugadores.size();
+//						 break;						 
+//				case 3:	 System.out.println("Case 3 cargarPartida");	 
+//						 this.juego.setScreen(new Nivel3(this.juego, puntaje));
+//						 posicion = this.jugadores.size();
+//						 break;				
+//				}
+//			} else {
+//				posicion += 1;
+//			}
+//		}
+//		System.out.println("No coincidió ningún nombre ");
 	}
 	
 	/**

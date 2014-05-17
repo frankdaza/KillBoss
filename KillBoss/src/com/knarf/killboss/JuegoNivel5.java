@@ -37,7 +37,7 @@ public class JuegoNivel5 implements Screen {
 	public Sound auch, gana;
 	
 	// Vidas del jugador
-	public int vidas = 3;
+	public int vidas;
 	
 	// Contador de preguntas
 	public int numeroPreguntas = 5;
@@ -52,12 +52,13 @@ public class JuegoNivel5 implements Screen {
 	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	// Puntaje
-	public int puntaje = 0;
+	public int puntaje;
 	
 	
-	public JuegoNivel5(final KillBoss juego, int puntaje) {
+	public JuegoNivel5(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas + 1;
 		
 		// Genero el número al azar de la pregunta y respuestas
 		this.numeroAzar();
@@ -244,7 +245,7 @@ public class JuegoNivel5 implements Screen {
         }        
         else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanasteEscudo(this.juego, this.puntaje));
+        		this.juego.setScreen(new GanasteEscudo(this.juego, this.puntaje, this.vidas));
     			this.dispose();    			
         	}
         	else {

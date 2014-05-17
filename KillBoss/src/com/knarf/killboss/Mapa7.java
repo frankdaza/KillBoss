@@ -25,15 +25,15 @@ public class Mapa7 implements Screen {
     public float stateTime;
     public OrthographicCamera camara;    
     public Rectangle fondoR, zackR, zackDerechaR;
-    public int puntaje = 0;
-    
-    // Variables para activar los niveles
+    public int puntaje;
+    public int vidas;    
     public Texture bossImg;
     public Rectangle bossR;
         
-	public Mapa7(final KillBoss juego, int puntaje) {		
+	public Mapa7(final KillBoss juego, int puntaje, int vidas) {		
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas;
 		
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteArmaduraD.png"));
@@ -154,7 +154,7 @@ public class Mapa7 implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.zackR.overlaps(this.bossR)) || (this.zackDerechaR.overlaps(this.bossR)) ) {
-    	   this.juego.setScreen(new NivelFinal(this.juego, this.puntaje));
+    	   this.juego.setScreen(new NivelFinal(this.juego, this.puntaje, this.vidas));
     	   this.dispose();
        }
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {

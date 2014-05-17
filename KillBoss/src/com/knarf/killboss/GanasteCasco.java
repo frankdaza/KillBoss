@@ -16,14 +16,16 @@ public class GanasteCasco implements Screen {
 	public Rectangle fondoR;
 	public OrthographicCamera camara;
 	public Sound gana;
-	public int puntaje = 0;
+	public int puntaje;
+	public int vidas;
 	
 	/**
 	 * Método constructor
 	 */
-	public GanasteCasco(final KillBoss juego, int puntaje){
+	public GanasteCasco(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas;
 		
 		// Cargo la imagen de fondo
 		this.fondoImg = new Texture(Gdx.files.internal("ganasteCasco.png"));
@@ -56,7 +58,7 @@ public class GanasteCasco implements Screen {
 		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Mapa5(this.juego, this.puntaje));
+			this.juego.setScreen(new Mapa5(this.juego, this.puntaje, this.vidas));
 			this.dispose();
 		}
 		

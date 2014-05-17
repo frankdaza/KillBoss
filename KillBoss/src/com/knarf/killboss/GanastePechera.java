@@ -17,13 +17,15 @@ public class GanastePechera implements Screen {
 	public OrthographicCamera camara;
 	public Sound gana;
 	public int puntaje = 0;
+	public int vidas;
 	
 	/**
 	 * Método constructor
 	 */
-	public GanastePechera(final KillBoss juego, int puntaje){
+	public GanastePechera(final KillBoss juego, int puntaje, int vidas){
 		this.juego = juego;
 		this.puntaje = puntaje;
+		this.vidas = vidas;
 		
 		// Cargo la imagen de fondo
 		this.fondoImg = new Texture(Gdx.files.internal("ganastePechera.png"));
@@ -56,7 +58,7 @@ public class GanastePechera implements Screen {
 		this.juego.batch.end();		
 		
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.juego.setScreen(new Mapa2(this.juego, this.puntaje));
+			this.juego.setScreen(new Mapa2(this.juego, this.puntaje, this.vidas));
 			this.dispose();
 		}
 		
