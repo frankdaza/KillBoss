@@ -217,7 +217,7 @@ public class Bonus1 implements Screen {
 	 */
 	public void zackDerecha() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x += 500 * Gdx.graphics.getDeltaTime();
+		this.zackR.x += 550 * Gdx.graphics.getDeltaTime();
 		this.zackDerechaR.x += 500 * Gdx.graphics.getDeltaTime();		
 		
 		this.juego.batch.begin();		
@@ -230,7 +230,7 @@ public class Bonus1 implements Screen {
 	 */
 	public void zackIzquierda() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x -= 500 * Gdx.graphics.getDeltaTime();
+		this.zackR.x -= 550 * Gdx.graphics.getDeltaTime();
 		this.zackDerechaR.x -= 500 * Gdx.graphics.getDeltaTime();		
 		
 		this.juego.batch.begin();		
