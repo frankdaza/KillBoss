@@ -256,5 +256,4 @@ public class Mapa5 implements Screen {
 		this.espadaImg.dispose();
 		this.bossImg.dispose();
 	}
-
 }

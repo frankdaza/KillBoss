@@ -54,7 +54,7 @@ public class JuegoNivelFinal implements Screen {
 	public Array<Rectangle> llamas = new Array<Rectangle>();
 	public Array<Rectangle> dragones = new Array<Rectangle>();
 	public long tiempoUltimaLlama;	
-	public long numeroLlamas = 200;
+	public long numeroLlamas = 260;
 	public Rectangle bossR;
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje, int vidas) {
@@ -239,12 +239,8 @@ public class JuegoNivelFinal implements Screen {
         	this.juego.setScreen(new GameOver(this.juego));
         	this.dispose();
         }
-        if (this.numeroLlamas <= 0) {
-        	this.gana.play();
-        	System.out.println("FELICITACIONES GANASTE EL JUEGO!");        	
-        	GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7);
-        	g.inicio();
-        	this.juego.setScreen(new MenuIntro(this.juego));
+        if (this.numeroLlamas <= 0) {              	    	
+        	this.juego.setScreen(new ZackGana(this.juego, this.puntaje, this.vidas));
         	this.dispose();
         }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
@@ -315,12 +311,13 @@ public class JuegoNivelFinal implements Screen {
 	public void dispose() {
 		this.walkSheetDerecha.dispose();
 		this.walkSheetIzquierda.dispose();
-		this.zackNormal.dispose();
+		this.zackNormal.dispose();		
 		this.fondoImg.dispose();		
-		this.auch.dispose();		
+		this.auch.dispose();
+		this.gana.dispose();
 		this.dragonGrito.dispose();
 		this.dragonVuelo.dispose();
-		
+		this.bossImg.dispose();
+		this.llamaImg.dispose();
 	}
-
 }

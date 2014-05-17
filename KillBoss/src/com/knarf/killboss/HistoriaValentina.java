@@ -49,8 +49,7 @@ public class HistoriaValentina implements Screen {
 		this.juego.batch.begin();
 		// Dibuja el fondo de las instrucciones
 		this.juego.batch.draw(this.valentinaHistoria, this.valentinaR.x, this.valentinaR.y);       
-		this.juego.batch.end();
-		
+		this.juego.batch.end();		
 	}
 
 	@Override
@@ -87,7 +86,5 @@ public class HistoriaValentina implements Screen {
 	public void dispose() {
 		this.valentinaHistoria.dispose();
 		this.musica.dispose();
-	}
-	
-
+	}	
 }

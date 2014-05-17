@@ -92,7 +92,8 @@ public class GameOver implements Screen {
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();	
+		this.fondoImg.dispose();
+		this.gameOver.dispose();
 	}
 
 }

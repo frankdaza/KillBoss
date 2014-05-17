@@ -64,7 +64,7 @@ public class JuegoNivel6 implements Screen {
 		this.numeroAzar();
 		
 		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoD.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -76,7 +76,7 @@ public class JuegoNivel6 implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoI.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteCascoI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -92,7 +92,7 @@ public class JuegoNivel6 implements Screen {
 		this.stateTime = 0f;
 		
 		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackEscudo.png"));
+		this.zackNormal = new Texture(Gdx.files.internal("zackCasco.png"));
 				
 		
 		// Cargo la imagen del fondo
@@ -167,7 +167,7 @@ public class JuegoNivel6 implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
-		this.juego.texto.draw(this.juego.batch, "Nivel 6 - Álgebra Lineal", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel 6 - Álbebra Lineal", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
@@ -293,7 +293,7 @@ public class JuegoNivel6 implements Screen {
 	 */
 	public void numeroAzar() {
 		Random rand = new Random();
-		this.azar = rand.nextInt(8);			
+		this.azar = rand.nextInt(3);			
 	}
 	
 	/**
@@ -398,8 +398,6 @@ public class JuegoNivel6 implements Screen {
 		this.AImg.dispose();
 		this.BImg.dispose();
 		this.auch.dispose();
-		this.gana.dispose();
-		
+		this.gana.dispose();		
 	}
-
 }

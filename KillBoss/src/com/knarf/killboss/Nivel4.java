@@ -55,9 +55,7 @@ public class Nivel4 implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
 			this.juego.setScreen(new JuegoNivel4(this.juego, this.puntaje, this.vidas));
 			this.dispose();
-		}
-		
-		
+		}		
 	}
 	
 
@@ -93,8 +91,6 @@ public class Nivel4 implements Screen {
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();
-		
+		this.fondoImg.dispose();	
 	}
-
 }

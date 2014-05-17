@@ -244,5 +244,4 @@ public class Mapa6 implements Screen {
 		this.espadaImg.dispose();
 		this.bossImg.dispose();
 	}
-
 }

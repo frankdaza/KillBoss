@@ -56,8 +56,6 @@ public class Nivel2 implements Screen {
 			this.juego.setScreen(new JuegoNivel2(this.juego, this.puntaje, this.vidas));
 			this.dispose();
 		}
-		
-		
 	}
 	
 
@@ -93,8 +91,6 @@ public class Nivel2 implements Screen {
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();
-		
+		this.fondoImg.dispose();		
 	}
-
 }

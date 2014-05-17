@@ -55,11 +55,8 @@ public class NivelFinal implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
 			this.juego.setScreen(new JuegoNivelFinal(this.juego, this.puntaje, this.vidas));
 			this.dispose();
-		}
-		
-		
-	}
-	
+		}			
+	}	
 
 	@Override
 	public void resize(int width, int height) {
@@ -93,8 +90,6 @@ public class NivelFinal implements Screen {
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();
-		
+		this.fondoImg.dispose();	
 	}
-
 }

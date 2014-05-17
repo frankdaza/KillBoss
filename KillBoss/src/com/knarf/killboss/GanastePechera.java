@@ -60,11 +60,8 @@ public class GanastePechera implements Screen {
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
 			this.juego.setScreen(new Mapa2(this.juego, this.puntaje, this.vidas));
 			this.dispose();
-		}
-		
-		
-	}
-	
+		}			
+	}	
 
 	@Override
 	public void resize(int width, int height) {
@@ -99,8 +96,6 @@ public class GanastePechera implements Screen {
 	@Override
 	public void dispose() {
 		this.fondoImg.dispose();
-		this.gana.dispose();
-		
+		this.gana.dispose();	
 	}
-
 }

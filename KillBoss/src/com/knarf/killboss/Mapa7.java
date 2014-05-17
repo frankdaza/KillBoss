@@ -228,5 +228,4 @@ public class Mapa7 implements Screen {
 		this.fondoImg.dispose();								
 		this.bossImg.dispose();
 	}
-
 }

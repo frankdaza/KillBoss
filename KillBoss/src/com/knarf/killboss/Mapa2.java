@@ -295,5 +295,4 @@ public class Mapa2 implements Screen {
 		this.espadaImg.dispose();
 		this.bossImg.dispose();
 	}
-
 }

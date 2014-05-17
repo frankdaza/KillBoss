@@ -95,5 +95,4 @@ public class Instrucciones implements Screen {
 		this.instruccionesImg.dispose();
 		this.instruccionesMusica.dispose();
 	}
-
 }

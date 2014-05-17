@@ -56,8 +56,6 @@ public class Nivel5 implements Screen {
 			this.juego.setScreen(new JuegoNivel5(this.juego, this.puntaje, this.vidas));
 			this.dispose();
 		}
-		
-		
 	}
 	
 
@@ -96,5 +94,4 @@ public class Nivel5 implements Screen {
 		this.fondoImg.dispose();
 		
 	}
-
 }

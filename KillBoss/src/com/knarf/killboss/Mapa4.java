@@ -268,5 +268,4 @@ public class Mapa4 implements Screen {
 		this.espadaImg.dispose();
 		this.bossImg.dispose();
 	}
-
 }

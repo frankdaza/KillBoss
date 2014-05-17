@@ -58,8 +58,7 @@ public class HistoriaZack implements Screen  {
 		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
 			this.juego.setScreen(new Mapa(this.juego));
 			this.dispose();
-		}
-		
+		}		
 	}
 
 	@Override
@@ -97,5 +96,4 @@ public class HistoriaZack implements Screen  {
 		this.zackHistoriaImg.dispose();
 		this.musica.dispose();
 	}
-
 }

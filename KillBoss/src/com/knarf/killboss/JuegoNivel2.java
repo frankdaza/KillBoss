@@ -398,8 +398,6 @@ public class JuegoNivel2 implements Screen {
 		this.AImg.dispose();
 		this.BImg.dispose();
 		this.auch.dispose();
-		this.gana.dispose();
-		
+		this.gana.dispose();	
 	}
-
 }

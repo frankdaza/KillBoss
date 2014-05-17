@@ -186,8 +186,8 @@ public class JuegoNivel4 implements Screen {
         	
         	this.juego.batch.begin();
         	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	
-        	this.juego.texto.draw(this.juego.batch, "* A - " + this.parRespuesta(this.azar), 2048 / 2 - 700, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.imparRespuesta(this.azar), 2048 / 2 - 700, 1024 / 2 + 100);        	
+        	this.juego.texto.draw(this.juego.batch, "* A - " + this.parRespuesta(this.azar), 2048 / 2 - 800, 1024 / 2 + 300);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.imparRespuesta(this.azar), 2048 / 2 - 800, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -398,8 +398,6 @@ public class JuegoNivel4 implements Screen {
 		this.AImg.dispose();
 		this.BImg.dispose();
 		this.auch.dispose();
-		this.gana.dispose();
-		
+		this.gana.dispose();	
 	}
-
 }
