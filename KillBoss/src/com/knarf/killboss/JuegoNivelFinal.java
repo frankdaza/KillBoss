@@ -44,7 +44,10 @@ public class JuegoNivelFinal implements Screen {
 	public Music dragonGrito, dragonVuelo;
 	
 	// Vidas del jugador
-	public int vidas;	
+	public int vidasZack;	
+	
+	// Vidas del dragón Boss
+	public int vidasBoss = 80;
 	
 	// Puntaje
 	public int puntaje;
@@ -53,13 +56,13 @@ public class JuegoNivelFinal implements Screen {
 	public Sound boss;
 	public Array<Rectangle> llamas = new Array<Rectangle>();	
 	public long tiempoUltimaLlama;	
-	public long numeroLlamas = 260;
+	public long numeroLlamas = 400;
 	public Rectangle bossR, poderR;
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
-		this.vidas = vidas + 1;
+		this.vidasZack = vidas + 1;
 			
 		// Configuro el sprite de zackDerecha
 		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteCascoD.png"));
@@ -197,9 +200,14 @@ public class JuegoNivelFinal implements Screen {
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
 		this.juego.texto.draw(this.juego.batch, "Nivel Final - Pelea con boss", 2048 / 2 - 500, 1010);
-		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
+		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidasZack, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Vidas Boss: " + this.vidasBoss, 1024, 512);
 		this.juego.batch.draw(this.bossImg, this.bossR.x, this.bossR.y);
+		if (this.bossR.overlaps(this.poderR)) {
+        	this.dragonGrito.play();
+        	this.vidasBoss = this.vidasBoss - 1;
+        }
 		// Dibuja las llamas
 		for (Rectangle llama : this.llamas) {
 			this.juego.batch.draw(this.llamaImg, llama.x, llama.y);			
@@ -215,7 +223,7 @@ public class JuegoNivelFinal implements Screen {
         }
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
         	this.zackIzquierda();
-        }       
+        }           
         if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
      	   this.spriteBatchN.setColor(1, 1, 1, 1);
      	   this.spriteBatchN.begin();
@@ -249,20 +257,16 @@ public class JuegoNivelFinal implements Screen {
         	}
         	if (llama.overlaps(this.zackR) || llama.overlaps(this.zackDerechaR)) {
         		this.puntaje -= 100;
-        		this.vidas -= 1;
+        		this.vidasZack -= 1;
         		this.auch.play((float) .3);
         		iter.remove();
         		this.numeroLlamas -= 1;
         	}
         }
-        if (this.vidas <= 0) {
+        if (this.vidasZack <= 0 || this.numeroLlamas <= 0) {
         	this.juego.setScreen(new GameOver(this.juego));
         	this.dispose();
-        }
-        if (this.numeroLlamas <= 0) {              	    	
-        	this.juego.setScreen(new ZackGana(this.juego, this.puntaje, this.vidas));
-        	this.dispose();
-        }
+        }        
         if (Gdx.input.isKeyPressed(Keys.SPACE)) {
         	this.poderZack();        	
         }       
@@ -274,7 +278,11 @@ public class JuegoNivelFinal implements Screen {
         }
         if (this.bossR.x > 2048 - 128) {
         	this.bossR.x = 2048 - 128;
-        }
+        }        
+        if (this.vidasBoss <= 0) {
+        	this.juego.setScreen(new ZackGana(this.juego, this.puntaje, this.vidasZack));
+        	this.dispose();
+        }              
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();

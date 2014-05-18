@@ -114,7 +114,7 @@ public class MenuIntro implements Screen {
 				this.dispose();				
 			}
 			if (this.selector == 2 && this.selector2 == 2) {
-				this.juego.setScreen(new HistoriaValentina(this.juego));
+				//this.juego.setScreen(new HistoriaValentina(this.juego));
 				this.dispose();				
 			}
 			if (this.selector2 == 1) {

@@ -9,8 +9,7 @@ public class KillBoss extends Game {
 	public SpriteBatch batch;
 	public MenuIntro menu;
 	public Instrucciones instrucciones;
-	public HistoriaZack historiaZack;
-	public HistoriaValentina historiaValentina;
+	public HistoriaZack historiaZack;	
 	public Mapa mapa;
 	public Mapa2 mapa2;
 	public Mapa3 mapa3;
