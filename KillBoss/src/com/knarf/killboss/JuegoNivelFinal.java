@@ -28,7 +28,7 @@ public class JuegoNivelFinal implements Screen {
     public Animation walkAnimationDerecha, walkAnimationIzquierda;
     public Texture walkSheetDerecha, walkSheetIzquierda, zackNormal;
     public TextureRegion[] walkFramesDerecha, walkFramesIzquierda;
-    public SpriteBatch spriteBatchN;
+    public SpriteBatch spriteBatchN, poderBatch;
     public TextureRegion currentFrameDerecha, currentFrameIzquierda;
     public float stateTime;
     
@@ -49,13 +49,12 @@ public class JuegoNivelFinal implements Screen {
 	// Puntaje
 	public int puntaje;
 	
-	public Texture bossImg, llamaImg;
+	public Texture bossImg, llamaImg, poderImg;
 	public Sound boss;
-	public Array<Rectangle> llamas = new Array<Rectangle>();
-	public Array<Rectangle> dragones = new Array<Rectangle>();
+	public Array<Rectangle> llamas = new Array<Rectangle>();	
 	public long tiempoUltimaLlama;	
 	public long numeroLlamas = 260;
-	public Rectangle bossR;
+	public Rectangle bossR, poderR;
 	
 	public JuegoNivelFinal(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
@@ -86,7 +85,8 @@ public class JuegoNivelFinal implements Screen {
 		}
 		this.walkAnimationIzquierda = new Animation(0.25f, this.walkFramesIzquierda);
 				
-		this.spriteBatchN = new SpriteBatch();		
+		this.spriteBatchN = new SpriteBatch();	
+		this.poderBatch = new SpriteBatch();
 		
 		this.stateTime = 0f;
 		
@@ -101,6 +101,9 @@ public class JuegoNivelFinal implements Screen {
 		
 		// Cargo la imagen de la llama
 		this.llamaImg = new Texture(Gdx.files.internal("llama.png"));
+		
+		// Cargo la imagen del poder de Zack
+		this.poderImg = new Texture(Gdx.files.internal("poder.png"));
 		
 		// Configuro el sonido cuando pierde una pregunta
 		this.auch = Gdx.audio.newSound(Gdx.files.internal("sounds/auch.mp3"));
@@ -145,12 +148,19 @@ public class JuegoNivelFinal implements Screen {
 		this.zackDerechaR.width = 64;
 		this.zackDerechaR.height = 128;
 		
-		// Crel el rectángulo para Boss
+		// Creo el rectángulo para Boss
 		this.bossR = new Rectangle();	
 		this.bossR.x = 1024;
 		this.bossR.y = 1024 - 160;
 		this.bossR.width = 256;
 		this.bossR.height = 256;
+		
+		// Creo el rectángulo para el poder de Zack
+		this.poderR = new Rectangle();
+		this.poderR.x = 1024;
+		this.poderR.y = 254;
+		this.poderR.width = 64;
+		this.poderR.height = 64;
 		
 		// Creo la lluvia de llamas en el cielo
 		this.lluviaLlamas();
@@ -212,6 +222,16 @@ public class JuegoNivelFinal implements Screen {
             this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
             this.spriteBatchN.end();
         }
+        if (this.zackDerechaR.x > 2048 - 64) {
+        	this.zackDerechaR.x = 2048 - 64;
+        	this.zackR.x = 2048 - 64;
+        	this.poderR.x = 2048 - 64;
+        }
+        if (this.zackDerechaR.x < 0) {
+        	this.zackDerechaR.x = 0;
+        	this.zackR.x = 0;
+        	this.poderR.x = 0;
+        }
         // Verifica si necesitamos crear mas llamas
         if (TimeUtils.nanoTime() - this.tiempoUltimaLlama > 100000000 ) {
         	this.lluviaLlamas();
@@ -243,6 +263,18 @@ public class JuegoNivelFinal implements Screen {
         	this.juego.setScreen(new ZackGana(this.juego, this.puntaje, this.vidas));
         	this.dispose();
         }
+        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+        	this.poderZack();        	
+        }       
+        if (this.poderR.y >= 1024 - 128) {
+        	this.poderR.y = 254;
+        }
+        if (this.bossR.x < 0) {
+        	this.bossR.x = 0;
+        }
+        if (this.bossR.x > 2048 - 128) {
+        	this.bossR.x = 2048 - 128;
+        }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();
@@ -256,7 +288,8 @@ public class JuegoNivelFinal implements Screen {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
 		this.zackR.x += 500 * Gdx.graphics.getDeltaTime();
 		this.zackDerechaR.x += 500 * Gdx.graphics.getDeltaTime();
-		this.bossR.x += 500 * Gdx.graphics.getDeltaTime();
+		this.poderR.x += 500 * Gdx.graphics.getDeltaTime();
+		this.bossR.x += 1400 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameDerecha, this.zackDerechaR.x, this.zackDerechaR.y);
@@ -270,11 +303,22 @@ public class JuegoNivelFinal implements Screen {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
 		this.zackR.x -= 500 * Gdx.graphics.getDeltaTime();
 		this.zackDerechaR.x -= 500 * Gdx.graphics.getDeltaTime();
-		this.bossR.x -= 500 * Gdx.graphics.getDeltaTime();
+		this.poderR.x -= 500 * Gdx.graphics.getDeltaTime();
+		this.bossR.x -= 1400 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
 		this.juego.batch.draw(this.currentFrameIzquierda, this.zackDerechaR.x, this.zackDerechaR.y);
 		this.juego.batch.end();
+	}
+	
+	/**
+	 * Crea el poder de Zack y lo visualiza
+	 */
+	public void poderZack() {				
+		this.poderR.y += 500 * Gdx.graphics.getDeltaTime();
+		this.poderBatch.begin();
+		this.poderBatch.draw(this.poderImg, this.poderR.x, this.poderR.y);
+		this.poderBatch.end();		
 	}
 			
 	@Override

@@ -57,7 +57,7 @@ public class ZackGana implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.batch.end();
 		
-		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {			
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {			
 			GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7);
         	g.inicio();
         	this.juego.setScreen(new MenuIntro(this.juego));
