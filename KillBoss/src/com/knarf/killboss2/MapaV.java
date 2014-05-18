@@ -199,10 +199,10 @@ public class MapaV implements Screen {
         this.spriteBatchN.end();
 		
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-        	this.zackDerecha();
+        	this.valentinaDerecha();
         }
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-        	this.zackIzquierda();
+        	this.valentinaIzquierda();
         }
         if ( (this.valentinaR.x > 2048 - 64) || (this.valentinaDerechaR.x > 2048 - 64)) {
         	this.valentinaR.x = 2048 - 64;
@@ -219,7 +219,7 @@ public class MapaV implements Screen {
            this.spriteBatchN.end();
        }
        if ( (this.valentinaR.overlaps(this.armaduraPechoR)) || (this.valentinaDerechaR.overlaps(this.armaduraPechoR)) ) {
-    	   //this.juego.setScreen(new Nivel1(this.juego));    	   
+    	   this.juego.setScreen(new Nivel1V(this.juego));    	   
     	   this.dispose();
        }   
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
@@ -232,7 +232,7 @@ public class MapaV implements Screen {
 	/**
 	 * Mueve el sprite hacia la derecha
 	 */
-	public void zackDerecha() {
+	public void valentinaDerecha() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
 		this.valentinaR.x += 120 * Gdx.graphics.getDeltaTime();
 		this.valentinaDerechaR.x += 120 * Gdx.graphics.getDeltaTime();
@@ -245,7 +245,7 @@ public class MapaV implements Screen {
 	/**
 	 * Mueve el sprite hacia la izquierda
 	 */
-	public void zackIzquierda() {
+	public void valentinaIzquierda() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
 		this.valentinaR.x -= 120 * Gdx.graphics.getDeltaTime();
 		this.valentinaDerechaR.x -= 120 * Gdx.graphics.getDeltaTime();
