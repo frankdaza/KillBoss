@@ -53,7 +53,7 @@ public class GameOver implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.batch.end();
 		
-		if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
 			this.juego.setScreen(new MenuIntro(this.juego));
 			this.dispose();
 		}
