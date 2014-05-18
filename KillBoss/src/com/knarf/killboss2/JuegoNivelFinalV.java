@@ -282,7 +282,7 @@ public class JuegoNivelFinalV implements Screen {
         	this.bossR.x = 2048 - 128;
         }        
         if (this.vidasBoss <= 0) {
-        	this.juego.setScreen(new valentinaGanaV(this.juego, this.puntaje, this.vidasvalentina));
+        	this.juego.setScreen(new ValentinaGana(this.juego, this.puntaje, this.vidasvalentina));
         	this.dispose();
         }              
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
