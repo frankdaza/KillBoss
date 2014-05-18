@@ -1,4 +1,4 @@
-package com.knarf.killboss;
+package com.knarf.killboss2;
 
 import java.util.Random;
 
@@ -12,8 +12,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.knarf.killboss.Abrir;
+import com.knarf.killboss.BaseDeDatos;
+import com.knarf.killboss.GameOver;
+import com.knarf.killboss.KillBoss;
 
-public class JuegoNivel6 implements Screen {
+public class JuegoNivel6V implements Screen {
 	
 	final KillBoss juego;
 	
@@ -22,7 +26,7 @@ public class JuegoNivel6 implements Screen {
     private static final int FRAME_ROWS = 2;
 
     public Animation walkAnimationDerecha, walkAnimationIzquierda;
-    public Texture walkSheetDerecha, walkSheetIzquierda, zackNormal;
+    public Texture walkSheetDerecha, walkSheetIzquierda, valentinaNormal;
     public TextureRegion[] walkFramesDerecha, walkFramesIzquierda;
     public SpriteBatch spriteBatchN;
     public TextureRegion currentFrameDerecha, currentFrameIzquierda;
@@ -31,7 +35,7 @@ public class JuegoNivel6 implements Screen {
     // Variables del fondo, cámara y rectángulos
 	public OrthographicCamera camara;
 	public Texture fondoImg, AImg, BImg;
-	public Rectangle fondoR, zackR, zackDerechaR, AR, BR;
+	public Rectangle fondoR, valentinaR, valentinaDerechaR, AR, BR;
 	
 	// Sonido cuando pierde y gana una pregunta
 	public Sound auch, gana;
@@ -55,7 +59,7 @@ public class JuegoNivel6 implements Screen {
 	public int puntaje;
 	
 	
-	public JuegoNivel6(final KillBoss juego, int puntaje, int vidas) {
+	public JuegoNivel6V(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
 		this.puntaje = puntaje;
 		this.vidas = vidas + 1;
@@ -63,8 +67,8 @@ public class JuegoNivel6 implements Screen {
 		// Genero el número al azar de la pregunta y respuestas
 		this.numeroAzar();
 		
-		// Configuro el sprite de zackDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoD.png"));
+		// Configuro el sprite de valentinaDerecha
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/valentinaSpriteEscudoD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -75,8 +79,8 @@ public class JuegoNivel6 implements Screen {
 		}
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
-		// Configuro el sprite de zackIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteEscudoI.png"));
+		// Configuro el sprite de valentinaIzquierda
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/valentinaSpriteEscudoI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -91,8 +95,8 @@ public class JuegoNivel6 implements Screen {
 		
 		this.stateTime = 0f;
 		
-		// Cargo la imagen de zack normal
-		this.zackNormal = new Texture(Gdx.files.internal("zackEscudo.png"));
+		// Cargo la imagen de valentina normal
+		this.valentinaNormal = new Texture(Gdx.files.internal("valentinaEscudo.png"));
 				
 		
 		// Cargo la imagen del fondo
@@ -121,19 +125,19 @@ public class JuegoNivel6 implements Screen {
 		this.fondoR.width = 2048;
 		this.fondoR.height = 1024;
 		
-		// Creo el rectángulo para zack normal.
-		this.zackR = new Rectangle();
-		this.zackR.x = 1024;
-		this.zackR.y = 190;
-		this.zackR.width = 64;
-		this.zackR.height = 128;
+		// Creo el rectángulo para valentina normal.
+		this.valentinaR = new Rectangle();
+		this.valentinaR.x = 1024;
+		this.valentinaR.y = 190;
+		this.valentinaR.width = 64;
+		this.valentinaR.height = 128;
 		
-		// Creo el rectángulo para zack derecha.
-		this.zackDerechaR = new Rectangle();
-		this.zackDerechaR.x = 1024;
-		this.zackDerechaR.y = 190;
-		this.zackDerechaR.width = 64;
-		this.zackDerechaR.height = 128;
+		// Creo el rectángulo para valentina derecha.
+		this.valentinaDerechaR = new Rectangle();
+		this.valentinaDerechaR.x = 1024;
+		this.valentinaDerechaR.y = 190;
+		this.valentinaDerechaR.width = 64;
+		this.valentinaDerechaR.height = 128;
 		
 		// Creo el rectángulo para la letra A
 		this.AR = new Rectangle();
@@ -175,7 +179,7 @@ public class JuegoNivel6 implements Screen {
 		this.juego.batch.end();
 		
 		this.spriteBatchN.begin();
-        this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
+        this.spriteBatchN.draw(this.valentinaNormal, this.valentinaR.x, this.valentinaR.y);
         this.spriteBatchN.end();
         
         if (this.numeroPreguntas > 0 && this.vidas > 0) {
@@ -191,61 +195,61 @@ public class JuegoNivel6 implements Screen {
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-            	this.zackDerecha();
+            	this.valentinaDerecha();
             }
             if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            	this.zackIzquierda();
+            	this.valentinaIzquierda();
             }
-            if ( (this.zackR.x > 2048 - 64) || (this.zackDerechaR.x > 2048 - 64)) {
-            	this.zackR.x = 2048 - 64;
-            	this.zackDerechaR.x = 2048 - 64;        	
+            if ( (this.valentinaR.x > 2048 - 64) || (this.valentinaDerechaR.x > 2048 - 64)) {
+            	this.valentinaR.x = 2048 - 64;
+            	this.valentinaDerechaR.x = 2048 - 64;        	
             }
-            if ( (this.zackR.x < 0) || (this.zackDerechaR.x < 0) ) {
-            	this.zackR.x = 0;
-            	this.zackDerechaR.x = 0;        	
+            if ( (this.valentinaR.x < 0) || (this.valentinaDerechaR.x < 0) ) {
+            	this.valentinaR.x = 0;
+            	this.valentinaDerechaR.x = 0;        	
             }
            if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
         	   this.spriteBatchN.setColor(1, 1, 1, 1);
         	   this.spriteBatchN.begin();
-               this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
+               this.spriteBatchN.draw(this.valentinaNormal, this.valentinaR.x, this.valentinaR.y);
                this.spriteBatchN.end();
            }
-           if (this.zackDerechaR.overlaps(AR) && this.azar % 2 == 0) {
+           if (this.valentinaDerechaR.overlaps(AR) && this.azar % 2 == 0) {
         	   this.gana.play((float) .4);
     		   this.numeroPreguntas -= 1;
     		   this.puntaje += 50;
     		   this.numeroAzar();
-    		   this.zackDerechaR.x = 2048 / 2;
-    		   this.zackR.x = 2048 / 2;
+    		   this.valentinaDerechaR.x = 2048 / 2;
+    		   this.valentinaR.x = 2048 / 2;
            }
-           if (this.zackDerechaR.overlaps(AR) && this.azar % 2 != 0) {
+           if (this.valentinaDerechaR.overlaps(AR) && this.azar % 2 != 0) {
         	   this.auch.play((float) .4);
     		   this.numeroPreguntas -= 1;
     		   this.vidas -= 1;
     		   this.numeroAzar();
-    		   this.zackDerechaR.x = 2048 / 2;
-    		   this.zackR.x = 2048 / 2;
+    		   this.valentinaDerechaR.x = 2048 / 2;
+    		   this.valentinaR.x = 2048 / 2;
            }
-           if (this.zackDerechaR.overlaps(BR) && this.azar % 2 == 0) {
+           if (this.valentinaDerechaR.overlaps(BR) && this.azar % 2 == 0) {
         	   this.auch.play((float) .4);
     		   this.numeroPreguntas -= 1;
     		   this.vidas -= 1;
     		   this.numeroAzar();
-    		   this.zackDerechaR.x = 2048 / 2;
-    		   this.zackR.x = 2048 / 2;
+    		   this.valentinaDerechaR.x = 2048 / 2;
+    		   this.valentinaR.x = 2048 / 2;
            }
-           if (this.zackDerechaR.overlaps(BR) && this.azar % 2 != 0) {
+           if (this.valentinaDerechaR.overlaps(BR) && this.azar % 2 != 0) {
         	   this.gana.play((float) .4);
     		   this.numeroPreguntas -= 1;
     		   this.puntaje += 50;
     		   this.numeroAzar();
-    		   this.zackDerechaR.x = 2048 / 2;
-    		   this.zackR.x = 2048 / 2;
+    		   this.valentinaDerechaR.x = 2048 / 2;
+    		   this.valentinaR.x = 2048 / 2;
            }
         }        
         else {
         	if (this.numeroPreguntas == 0 && this.vidas > 0) {
-        		this.juego.setScreen(new GanasteArmadura(this.juego, this.puntaje, this.vidas));
+        		this.juego.setScreen(new GanasteArmaduraV(this.juego, this.puntaje, this.vidas));
     			this.dispose();    			
         	}
         	else {
@@ -262,26 +266,26 @@ public class JuegoNivel6 implements Screen {
 	/**
 	 * Mueve el sprite hacia la derecha
 	 */
-	public void zackDerecha() {
+	public void valentinaDerecha() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x += 200 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x += 200 * Gdx.graphics.getDeltaTime();
+		this.valentinaR.x += 200 * Gdx.graphics.getDeltaTime();
+		this.valentinaDerechaR.x += 200 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
-		this.juego.batch.draw(this.currentFrameDerecha, this.zackDerechaR.x, this.zackDerechaR.y);
+		this.juego.batch.draw(this.currentFrameDerecha, this.valentinaDerechaR.x, this.valentinaDerechaR.y);
 		this.juego.batch.end();
 	}	
 	
 	/**
 	 * Mueve el sprite hacia la izquierda
 	 */
-	public void zackIzquierda() {
+	public void valentinaIzquierda() {
 		this.spriteBatchN.setColor(1, 1, 1, 0);
-		this.zackR.x -= 200 * Gdx.graphics.getDeltaTime();
-		this.zackDerechaR.x -= 200 * Gdx.graphics.getDeltaTime();
+		this.valentinaR.x -= 200 * Gdx.graphics.getDeltaTime();
+		this.valentinaDerechaR.x -= 200 * Gdx.graphics.getDeltaTime();
 		
 		this.juego.batch.begin();		
-		this.juego.batch.draw(this.currentFrameIzquierda, this.zackDerechaR.x, this.zackDerechaR.y);
+		this.juego.batch.draw(this.currentFrameIzquierda, this.valentinaDerechaR.x, this.valentinaDerechaR.y);
 		this.juego.batch.end();
 	}
 	
@@ -393,7 +397,7 @@ public class JuegoNivel6 implements Screen {
 	public void dispose() {
 		this.walkSheetDerecha.dispose();
 		this.walkSheetIzquierda.dispose();
-		this.zackNormal.dispose();
+		this.valentinaNormal.dispose();
 		this.fondoImg.dispose();
 		this.AImg.dispose();
 		this.BImg.dispose();
