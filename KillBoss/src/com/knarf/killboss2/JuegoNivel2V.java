@@ -17,7 +17,7 @@ import com.knarf.killboss.BaseDeDatos;
 import com.knarf.killboss.GameOver;
 import com.knarf.killboss.KillBoss;
 
-public class JuegoNivel1V implements Screen {
+public class JuegoNivel2V implements Screen {
 	
 	final KillBoss juego;
 	
@@ -41,7 +41,7 @@ public class JuegoNivel1V implements Screen {
 	public Sound auch, gana;
 	
 	// Vidas del jugador
-	public int vidas = 3;
+	public int vidas;
 	
 	// Contador de preguntas
 	public int numeroPreguntas = 5;
@@ -56,17 +56,19 @@ public class JuegoNivel1V implements Screen {
 	public BaseDeDatos db = new BaseDeDatos(this.juego);
 	
 	// Puntaje
-	public int puntaje = 0;
+	public int puntaje;
 	
 	
-	public JuegoNivel1V(final KillBoss juego) {
+	public JuegoNivel2V(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
+		this.puntaje = puntaje;
+		this.vidas = vidas + 1;
 		
 		// Genero el número al azar de la pregunta y respuestas
 		this.numeroAzar();
 		
 		// Configuro el sprite de valentinaDerecha
-		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/valentinaSpriteDerecha.png"));
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/valentinaSpritePecheraD.png"));
 		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
@@ -78,7 +80,7 @@ public class JuegoNivel1V implements Screen {
 		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de valentinaIzquierda
-		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/valentinaSpriteIzquierda.png"));
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/valentinaSpritePecheraI.png"));
 		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
@@ -94,7 +96,7 @@ public class JuegoNivel1V implements Screen {
 		this.stateTime = 0f;
 		
 		// Cargo la imagen de valentina normal
-		this.valentinaNormal = new Texture(Gdx.files.internal("valentinaNormal.png"));
+		this.valentinaNormal = new Texture(Gdx.files.internal("valentinaPechera.png"));
 				
 		
 		// Cargo la imagen del fondo
@@ -169,7 +171,7 @@ public class JuegoNivel1V implements Screen {
 		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
 		this.juego.texto.setColor(0, 0, 0, 1);
 		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
-		this.juego.texto.draw(this.juego.batch, "Nivel 1 - Lógica", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel 2 - Probabilidad", 2048 / 2 - 500, 1010);
 		this.juego.texto.draw(this.juego.batch, "Vidas: " + this.vidas, 2048 / 2, 1010);
 		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
 		this.juego.batch.draw(this.AImg, this.AR.x, this.AR.y);
@@ -187,9 +189,9 @@ public class JuegoNivel1V implements Screen {
         	this.posibleRespuesta = this.posibleRespuesta(this.azar);        	
         	
         	this.juego.batch.begin();
-        	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	        
+        	this.juego.texto.draw(this.juego.batch, this.pregunta, 2048 / 2 - 256, 1024 / 2 + 400);        	
         	this.juego.texto.draw(this.juego.batch, "* A - " + this.parRespuesta(this.azar), 2048 / 2 - 650, 1024 / 2 + 300);
-        	this.juego.texto.draw(this.juego.batch, "* B - " + this.imparRespuesta(this.azar), 2048 / 2 - 650, 1024 / 2 + 100);
+        	this.juego.texto.draw(this.juego.batch, "* B - " + this.imparRespuesta(this.azar), 2048 / 2 - 650, 1024 / 2 + 100);        	
         	this.juego.batch.end();
         	
         	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -246,11 +248,8 @@ public class JuegoNivel1V implements Screen {
            }
         }        
         else {
-        	if (this.numeroPreguntas == 0 && this.vidas == 3) {
-        		this.juego.setScreen(new Bonus1V(this.juego, this.puntaje, this.vidas));
-        	}
-        	else if (this.numeroPreguntas == 0 && ( this.vidas < 3 && this.vidas > 0 ) ) {
-        		this.juego.setScreen(new GanastePecheraV(this.juego, this.puntaje, this.vidas));
+        	if (this.numeroPreguntas == 0 && this.vidas > 0) {
+        		this.juego.setScreen(new GanasteBrazosV(this.juego, this.puntaje, this.vidas));
     			this.dispose();    			
         	}
         	else {
@@ -289,7 +288,8 @@ public class JuegoNivel1V implements Screen {
 		this.juego.batch.draw(this.currentFrameIzquierda, this.valentinaDerechaR.x, this.valentinaDerechaR.y);
 		this.juego.batch.end();
 	}
-		
+	
+	
 	/**
 	 * Retorna un número al azar de 0 a 7, el cual será
 	 * la posición de la pregunta y respuesta.
@@ -307,7 +307,7 @@ public class JuegoNivel1V implements Screen {
 	public String pregunta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String pregunta = this.db.getPregunta(1, posicion);		
+		String pregunta = this.db.getPregunta(2, posicion);		
 		return pregunta;
 	}
 	
@@ -318,7 +318,7 @@ public class JuegoNivel1V implements Screen {
 	public String respuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String respuesta = this.db.getRespuesta(1, posicion);		
+		String respuesta = this.db.getRespuesta(2, posicion);		
 		return respuesta;
 	}
 	
@@ -329,7 +329,7 @@ public class JuegoNivel1V implements Screen {
 	public String posibleRespuesta(int posicion) {	
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();		
-		String posibleRespuesta = this.db.getPosibleRespuesta(1, posicion);		
+		String posibleRespuesta = this.db.getPosibleRespuesta(2, posicion);		
 		return posibleRespuesta;
 	}
 	
