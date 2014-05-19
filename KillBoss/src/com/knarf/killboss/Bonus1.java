@@ -206,6 +206,14 @@ public class Bonus1 implements Screen {
         if (this.numeroPocimas == 0) {
         	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje, this.vidas));
         }
+        if (this.zackR.x <= 0) {
+        	this.zackR.x = 0;
+        	this.zackDerechaR.x = 0;
+        }
+        if (this.zackR.x >= 2048 - 64) {
+        	this.zackR.x = 2048 - 64;
+        	this.zackDerechaR.x = 2048 - 64;
+        }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();

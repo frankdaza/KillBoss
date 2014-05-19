@@ -207,6 +207,14 @@ public class Bonus1V implements Screen {
         if (this.numeroPocimas == 0) {
         	this.juego.setScreen(new GanastePecheraV(this.juego, this.puntaje, this.vidas));
         }
+        if (this.valentinaR.x <= 0) {
+        	this.valentinaR.x = 0;
+        	this.valentinaDerechaR.x = 0;
+        }
+        if (this.valentinaR.x >= 2048 - 64) {
+        	this.valentinaR.x = 2048 - 64;
+        	this.valentinaDerechaR.x = 2048 - 64;
+        }
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
         	Gdx.app.exit();
         	this.dispose();

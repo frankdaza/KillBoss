@@ -56,7 +56,7 @@ public class HistoriaZack implements Screen  {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-			this.juego.setScreen(new Mapa(this.juego));
+			this.juego.setScreen(new Mapa(this.juego));			
 			this.dispose();
 		}		
 	}
