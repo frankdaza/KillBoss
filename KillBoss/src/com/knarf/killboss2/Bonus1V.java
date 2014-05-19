@@ -62,7 +62,7 @@ public class Bonus1V implements Screen {
 		    	this.walkFramesDerecha[index++] = tmp[i][j];
 		    }
 		}
-		this.walkAnimationDerecha = new Animation(0.25f, this.walkFramesDerecha);
+		this.walkAnimationDerecha = new Animation(0.125f, this.walkFramesDerecha);
 		
 		// Configuro el sprite de valentinaIzquierda
 		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/valentinaSpriteIzquierda.png"));
@@ -74,7 +74,7 @@ public class Bonus1V implements Screen {
 		    	this.walkFramesIzquierda[index2++] = tmp2[i][j];
 		    }
 		}
-		this.walkAnimationIzquierda = new Animation(0.25f, this.walkFramesIzquierda);
+		this.walkAnimationIzquierda = new Animation(0.125f, this.walkFramesIzquierda);
 				
 		this.spriteBatchN = new SpriteBatch();		
 		
