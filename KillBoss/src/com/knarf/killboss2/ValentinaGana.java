@@ -61,7 +61,7 @@ public class ValentinaGana implements Screen {
 		this.juego.batch.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.ENTER)) {			
-			GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7);
+			GuardarPartida g = new GuardarPartida(this.juego, this.puntaje, 7, 2);
         	g.inicio();
         	this.juego.setScreen(new MenuIntro(this.juego));
         	this.dispose();

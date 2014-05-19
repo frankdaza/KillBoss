@@ -7,13 +7,15 @@ public class GuardarPartida {
 	final KillBoss juego;
 	public boolean salir = true;
 	public BaseDeDatos db = new BaseDeDatos(this.juego);
-	public int puntaje = 0;
-	public int nivel = 0;
+	public int puntaje;
+	public int nivel;
+	public int zackValentina;
 	
-	public GuardarPartida(final KillBoss juego, int puntaje, int nivel) {
+	public GuardarPartida(final KillBoss juego, int puntaje, int nivel, int zackValentina) {
 		this.juego = juego;
 		this.puntaje = puntaje;
 		this.nivel = nivel;
+		this.zackValentina = zackValentina;
 	}
 	
 	@SuppressWarnings("resource")
@@ -53,7 +55,7 @@ public class GuardarPartida {
 		String nombre = op.nextLine();
 		Abrir a = new Abrir(this.juego);
 		this.db = a.abrir();
-		this.db.guardarPartida(nombre, this.puntaje, this.nivel, this.juego);
+		this.db.guardarPartida(nombre, this.puntaje, this.nivel, this.zackValentina);
 		Guardar g = new Guardar();
 		g.guardar(this.db);
 	}

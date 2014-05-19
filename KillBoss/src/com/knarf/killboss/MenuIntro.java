@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.knarf.killboss2.HistoriaValentina;
+import com.knarf.killboss2.Mapa2V;
+import com.knarf.killboss2.Mapa3V;
+import com.knarf.killboss2.Mapa4V;
+import com.knarf.killboss2.Mapa5V;
+import com.knarf.killboss2.Mapa6V;
+import com.knarf.killboss2.Mapa7V;
 
 public class MenuIntro implements Screen {
 	
@@ -19,6 +25,9 @@ public class MenuIntro implements Screen {
 	public Texture fondoImg, zackImg, valentinaImg;
 	public Music menuMusica;
 	public int selector, selector2;
+	public static int puntaje = 0;
+	public static int nivel = 0;
+	public static int zackValentina = 0;
 	
 	/**
 	 * Método constructor
@@ -26,7 +35,8 @@ public class MenuIntro implements Screen {
 	 */
 	public MenuIntro(final KillBoss juego) {
 		// Variable del juego
-		this.juego = juego;
+		this.juego = juego;		
+				
 		
 		// Cargo las imágenes del fondo y de los personajes.
 		this.fondoImg = new Texture(Gdx.files.internal("menu/menuIntro.png"));
@@ -83,6 +93,41 @@ public class MenuIntro implements Screen {
         // Dibuja a valentina
         this.juego.batch.draw(this.valentinaImg, this.valentinaR.x, this.valentinaR.y);
         this.juego.batch.end();
+        
+        if (MenuIntro.zackValentina != 0) {
+        	if (MenuIntro.zackValentina == 1) {
+        		switch (MenuIntro.nivel) {
+        		case 2:	 this.juego.setScreen(new Mapa2(this.juego, MenuIntro.puntaje, 3));
+        				 break;
+        		case 3:	 this.juego.setScreen(new Mapa3(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 4:	 this.juego.setScreen(new Mapa4(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 5:	 this.juego.setScreen(new Mapa5(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 6:	 this.juego.setScreen(new Mapa6(this.juego, MenuIntro.puntaje, 3));
+				 		 break;        		
+        		case 7:	 this.juego.setScreen(new Mapa7(this.juego, MenuIntro.puntaje, 3));
+		 		 		 break;
+        		} // switch (MenuIntro.nivel)
+        	} // if (MenuIntro.zackValentina == 1)
+        	if (MenuIntro.zackValentina == 2) {
+        		switch (MenuIntro.nivel) {
+        		case 2:	 this.juego.setScreen(new Mapa2V(this.juego, MenuIntro.puntaje, 3));
+        				 break;
+        		case 3:	 this.juego.setScreen(new Mapa3V(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 4:	 this.juego.setScreen(new Mapa4V(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 5:	 this.juego.setScreen(new Mapa5V(this.juego, MenuIntro.puntaje, 3));
+				 		 break;
+        		case 6:	 this.juego.setScreen(new Mapa6V(this.juego, MenuIntro.puntaje, 3));
+				 		 break;        		
+        		case 7:	 this.juego.setScreen(new Mapa7V(this.juego, MenuIntro.puntaje, 3));
+		 		 		 break;
+        		} // switch (MenuIntro.nivel)
+        	} // if (MenuIntro.zackValentina == 2)
+        }       
         
         jugador();
 	}

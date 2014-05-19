@@ -25,10 +25,10 @@ public class KillBoss extends Game {
 	public Nivel6 nivel6;	
 	public NivelFinal nivelFinal;
 	public GameOver gameOver;	
-	public BitmapFont texto;
+	public BitmapFont texto;		
 		
 	@Override
-	public void create() {	
+	public void create() {
 		this.batch = new SpriteBatch();	
 		this.texto = new BitmapFont();
 		this.menu = new MenuIntro(this);	
@@ -56,5 +56,4 @@ public class KillBoss extends Game {
 	@Override
 	public void resume() {
 	}
-
 }

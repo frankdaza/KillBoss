@@ -25,6 +25,9 @@ public class BaseDeDatos implements Serializable {
 	
 	// Nivel
 	public ArrayList<Integer> nivel = new ArrayList<Integer>();
+	
+	// Jugador elegido Zack o Valentina
+	public ArrayList<Integer> zackValentina = new ArrayList<Integer>();
 		
 	public BaseDeDatos(final KillBoss juego) {
 		this.juego = juego;
@@ -513,16 +516,19 @@ public class BaseDeDatos implements Serializable {
 	}
 	
 	/**
-	 * Guarda la partida de un jugador con su nombre, puntaje y nivel.
+	 * Guarda la partida de un jugador con su nombre, puntaje, nivel y
+	 * jugador con quien jugó, 1 -> Zack, 2 -> Valentina.
 	 * @param nombre
 	 * @param puntaje
 	 * @param nivel
+	 * @param zackValentina
 	 */
-	public void guardarPartida(String nombre, int puntaje, int nivel, final KillBoss juego) {
+	public void guardarPartida(String nombre, int puntaje, int nivel, int zackValentina) {
 		System.out.println("Ingresa a la función guardar partida en la DB");
 		this.jugadores.add(nombre);		
 		this.puntajes.add(puntaje);		
-		this.nivel.add(nivel);		
+		this.nivel.add(nivel);	
+		this.zackValentina.add(zackValentina);
 	}
 	
 	/**
@@ -530,27 +536,18 @@ public class BaseDeDatos implements Serializable {
 	 * @param nombre
 	 */
 	public void cargarPartida(String nombre) {
-//		int posicion = 0;
-//		while (posicion < this.jugadores.size()) {			
-//			if (nombre.equals(jugadores.get(posicion)) ) {				
-//				int puntaje = this.puntajes.get(posicion);
-//				int nivel = this.nivel.get(posicion);				
-//				switch (nivel) {				
-//				case 2:	 KillBoss game = new KillBoss();
-//						 this.juego.setScreen(new Nivel2(game, puntaje));			 		    	    
-//						 System.out.println("Crea un nuevo mapa");
-//						 posicion = this.jugadores.size();
-//						 break;						 
-//				case 3:	 System.out.println("Case 3 cargarPartida");	 
-//						 this.juego.setScreen(new Nivel3(this.juego, puntaje));
-//						 posicion = this.jugadores.size();
-//						 break;				
-//				}
-//			} else {
-//				posicion += 1;
-//			}
-//		}
-//		System.out.println("No coincidió ningún nombre ");
+		int i = 0;
+		while (i < this.jugadores.size()) {
+			if (this.jugadores.get(i).equals(nombre)) {												
+				MenuIntro.puntaje = this.puntajes.get(i);
+				MenuIntro.nivel = this.nivel.get(i);
+				MenuIntro.zackValentina = this.zackValentina.get(i);
+				break;
+			}
+			else {
+				i++;
+			}
+		}
 	}
 	
 	/**
@@ -558,7 +555,7 @@ public class BaseDeDatos implements Serializable {
 	 */
 	public void imprimirPartidas() {
 		System.out.println("****************************");
-		System.out.println("* NOMBRE * PUNTAJE * NIVEL *");
+		System.out.println("* NOMBRE ** PUNTAJE ** NIVEL *");
 		System.out.println("****************************");
 		int posicion = 0;
 		while (posicion < this.jugadores.size()) {
@@ -575,5 +572,6 @@ public class BaseDeDatos implements Serializable {
 		this.jugadores = new ArrayList<String>();
 		this.puntajes = new ArrayList<Integer>();
 		this.nivel = new ArrayList<Integer>();
+		this.zackValentina = new ArrayList<Integer>();
 	}
 }
