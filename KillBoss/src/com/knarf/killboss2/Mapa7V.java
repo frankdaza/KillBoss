@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.knarf.killboss.GuardarPartida;
 import com.knarf.killboss.KillBoss;
 
 public class Mapa7V implements Screen {
@@ -161,6 +162,10 @@ public class Mapa7V implements Screen {
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
     	   Gdx.app.exit();
     	   this.dispose();
+       }
+       if (Gdx.input.isKeyPressed(Keys.F1)) {
+    	   GuardarPartida partida = new GuardarPartida(this.juego, this.puntaje, 7, 2);
+    	   partida.inicio();
        }
        
 	}
