@@ -157,6 +157,10 @@ public class Mapa7 implements Screen {
     	   this.juego.setScreen(new NivelFinal(this.juego, this.puntaje, this.vidas));
     	   this.dispose();
        }
+       if (Gdx.input.isKeyPressed(Keys.F1)) {
+    	   GuardarPartida partida = new GuardarPartida(this.juego, this.puntaje, 7, 1);
+    	   partida.inicio();
+       }
        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
     	   Gdx.app.exit();
     	   this.dispose();
