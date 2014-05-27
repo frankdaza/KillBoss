@@ -248,6 +248,10 @@ public class JuegoNivel4 implements Screen {
         		this.juego.setScreen(new GanasteCasco(this.juego, this.puntaje, this.vidas));
     			this.dispose();    			
         	}
+        	if (this.numeroPreguntas == 0 && this.vidas == 3) {
+        		this.juego.setScreen(new Bonus2(this.juego, this.puntaje, this.vidas));
+        		this.dispose();
+        	}
         	else {
         		this.juego.setScreen(new GameOver(this.juego));        		
     			this.dispose();

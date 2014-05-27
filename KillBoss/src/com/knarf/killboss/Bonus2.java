@@ -1,377 +1,287 @@
 package com.knarf.killboss;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-//import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Bonus2 implements Screen {
-	private static final int FRAME_COLS = 4;
-	private static final int FRAME_ROWS = 2;
-	public int puntaje = 0;
-	public Animation walkAnimationDerecha, walkAnimationIzquierda, Money;
-	public Texture walkSheetDerecha, walkSheetIzquierda, zackNormal, fondoImg,
-			monedas;
-	public TextureRegion[] walkFramesDerecha, walkFramesIzquierda, monedaMov;
-	public SpriteBatch spriteBatch, spriteBatchN;
-	public TextureRegion currentFrameDerecha, currentFrameIzquierda;
+	
 	final KillBoss juego;
-	public Texture fondoNive11;
-	public Rectangle fondoR, pre4, pre5, zackDireccion, pre1, limite1, limite2,
-			limite3, pre2, pre3;
+	
+	// Variables de los sprites
+	private static final int FRAME_COLS = 4;
+    private static final int FRAME_ROWS = 2;
+
+    public Animation walkAnimationDerecha, walkAnimationIzquierda;
+    public Texture walkSheetDerecha, walkSheetIzquierda, zackNormal;
+    public TextureRegion[] walkFramesDerecha, walkFramesIzquierda;
+    public SpriteBatch spriteBatchN;
+    public TextureRegion currentFrameDerecha, currentFrameIzquierda;
+    public float stateTime;
+    
+    // Variables del fondo, cámara y rectángulos
 	public OrthographicCamera camara;
-	public SpriteBatch lote;
-	public float stateTime;
-	float unitScale = 16;
-	TiledMap map;
-	public OrthogonalTiledMapRenderer renderer;
-	private World world;
-	private Body jumper;
-	public static final float PIXELS_PER_METER = 60.0f;
-	private boolean jumperFacingRight;
-	private Sprite jumperSprite;
-	TiledMapRenderer tileMapRenderer;
-	public Texture interrogacion;
-	boolean salto = false;
-	public int aumentoPuntaje = 0;
-
-	/**
-	 * M�todo constructor
-	 */
-	public Bonus2(final KillBoss juego, int puntaje) {
+	public Texture fondoImg;
+	public Rectangle fondoR, zackR, zackDerechaR;			
+	
+	// Puntaje
+	public int puntaje = 0;
+	
+	public Texture pocimaImg;	
+	public Array<Rectangle> pocimas = new Array<Rectangle>();	
+	public long tiempoUltimaPocima;	
+	public int numeroPocimas = 50;
+	public int numeroPocimasJugador = 10;
+	public Rectangle pocimaR;
+	public int vidas;
+	
+	public Bonus2(final KillBoss juego, int puntaje, int vidas) {
 		this.juego = juego;
-
-		// Cargo la imagen de fondo
-		//this.fondoImg = new Texture(Gdx.files.internal("nivel1.png"));
-		//this.fondoNive11 = new Texture(Gdx.files.internal("fondo.png"));
-		this.zackNormal = new Texture(Gdx.files.internal("zackNormal.png"));
-		this.interrogacion = new Texture(Gdx.files.internal("pregunta1.png"));
-		this.zackNormal.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		this.walkSheetDerecha = new Texture(
-				Gdx.files.internal("sprites/zackSpriteDerecha.png"));
-		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha,
-				this.walkSheetDerecha.getWidth() / FRAME_COLS,
-				this.walkSheetDerecha.getHeight() / FRAME_ROWS);
+		this.puntaje = puntaje;
+		this.vidas = vidas;
+			
+		// Configuro el sprite de zackDerecha
+		this.walkSheetDerecha = new Texture(Gdx.files.internal("sprites/zackSpriteDerecha.png"));
+		TextureRegion[][] tmp = TextureRegion.split(this.walkSheetDerecha, this.walkSheetDerecha.getWidth()/FRAME_COLS, this.walkSheetDerecha.getHeight()/FRAME_ROWS);
 		this.walkFramesDerecha = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++) {
-				this.walkFramesDerecha[index++] = tmp[i][j];
-			}
+		    for (int j = 0; j < FRAME_COLS; j++) {
+		    	this.walkFramesDerecha[index++] = tmp[i][j];
+		    }
 		}
-		this.walkAnimationDerecha = new Animation(0.125f,
-				this.walkFramesDerecha);
-		// ///////////////////////////////////////////////////////////////////
-
-		// ////////////////////////////////////////////////////////////////////////////
-		this.walkSheetIzquierda = new Texture(
-				Gdx.files.internal("sprites/zackSpriteIzquierda.png"));
-		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda,
-				this.walkSheetIzquierda.getWidth() / FRAME_COLS,
-				this.walkSheetIzquierda.getHeight() / FRAME_ROWS);
+		this.walkAnimationDerecha = new Animation(0.125f, this.walkFramesDerecha);
+		
+		// Configuro el sprite de zackIzquierda
+		this.walkSheetIzquierda = new Texture(Gdx.files.internal("sprites/zackSpriteIzquierda.png"));
+		TextureRegion[][] tmp2 = TextureRegion.split(this.walkSheetIzquierda, this.walkSheetIzquierda.getWidth()/FRAME_COLS, this.walkSheetIzquierda.getHeight()/FRAME_ROWS);
 		this.walkFramesIzquierda = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index2 = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++) {
-				this.walkFramesIzquierda[index2++] = tmp2[i][j];
-			}
+		    for (int j = 0; j < FRAME_COLS; j++) {
+		    	this.walkFramesIzquierda[index2++] = tmp2[i][j];
+		    }
 		}
-		this.walkAnimationIzquierda = new Animation(0.125f,
-				this.walkFramesIzquierda);
-
-		// //////////confuramos la camara//////////////
-		// map = new TmxMapLoader().load("Bonus2/Bonus1.tmx");
-
-		// ///////////////////////////////// cargar propiedades de mapa
-		// map.getTileSets();
-		// map.getProperties();
-		// map.dispose();
-		// /////////////////////////////////////////////////////////////////////////////////////////
-		//
-		// camara = new OrthographicCamera();
-		// camara.setToOrtho(false, 2048, 1024);
-		// renderer = new OrthogonalTiledMapRenderer(map, 2);
-		// renderer.getSpriteBatch().disableBlending();
-		// renderer.setView(camara);
-		// /////////////////////////////////////////////////////////////
-		this.pre1 = new Rectangle();
-		this.pre1.x = 200;
-		this.pre1.y = 300;
-		this.pre1.height = 50;
-		this.pre1.width = 50;
-
-		this.pre2 = new Rectangle();
-		this.pre2.x = 0;
-		this.pre2.y = 400;
-		this.pre2.height = 50;
-		this.pre2.width = 50;
-
-		this.pre3 = new Rectangle();
-		this.pre3.x = 0;
-		this.pre3.y = 1024;
-		this.pre3.height = 50;
-		this.pre3.width = 50;
-
-		this.pre4 = new Rectangle();
-		this.pre4.x = 2048;
-		this.pre4.y = 0;
-		this.pre4.height = 50;
-		this.pre4.width = 50;
-
-		this.pre5 = new Rectangle();
-		this.pre5.x = (2048 / 2) + 100;
-		this.pre5.y = 0;
-		this.pre5.height = 50;
-		this.pre5.width = 50;
-
-		// /////////////////////////////////////////////////////////////////
-
-		this.limite1 = new Rectangle();
-		// ////////////////////////////////////////////////////////////////
-		this.zackDireccion = new Rectangle();
-		this.zackDireccion.x = 2048 / 2;
-		this.zackDireccion.y = 0;
-		this.zackDireccion.width = 64;
-		this.zackDireccion.height = 128;
-
-		// ////////////////////////////////////////////////////////////////
-
-		this.jumperSprite = new Sprite(zackNormal, (int) zackDireccion.x,
-				(int) zackDireccion.y, 64, 128);
-		world = new World(new Vector2(0.0f, -10.0f), true);
-
-		BodyDef jumperBodyDef = new BodyDef();
-		jumperBodyDef.type = BodyDef.BodyType.DynamicBody;
-		jumperBodyDef.position.set(zackDireccion.x, zackDireccion.y);
-
-		jumper = world.createBody(jumperBodyDef);
-
-		PolygonShape jumperShape = new PolygonShape();
-		jumperShape.setAsBox(this.zackDireccion.width / (2 * PIXELS_PER_METER),
-				this.zackDireccion.height / (2 * PIXELS_PER_METER));
-
-		this.jumper.setFixedRotation(true);
-
-		FixtureDef jumperFixtureDef = new FixtureDef();
-		jumperFixtureDef.shape = jumperShape;
-		jumperFixtureDef.density = 1.0f;
-		jumperFixtureDef.friction = 5.0f;
-
-		this.jumper.createFixture(jumperFixtureDef);
-		jumperShape.dispose();
-
-		this.lote = new SpriteBatch();
+		this.walkAnimationIzquierda = new Animation(0.125f, this.walkFramesIzquierda);
+				
+		this.spriteBatchN = new SpriteBatch();		
+		
 		this.stateTime = 0f;
-		// //////////////////////////////////////////
-
+		
+		// Cargo la imagen de zack normal
+		this.zackNormal = new Texture(Gdx.files.internal("zackNormal.png"));
+						
+		// Cargo la imagen del fondo
+		this.fondoImg = new Texture(Gdx.files.internal("fondoNiveles.png"));
+		
+		// Cargo la imagen de la pocima
+		this.pocimaImg = new Texture(Gdx.files.internal("pocima.png"));
+				
+		// Creo la cámara del juego
+		this.camara = new OrthographicCamera();
+		this.camara.setToOrtho(false, 2048, 1024);
+		
+		// Creo el rectángulo para el fondo
+		this.fondoR = new Rectangle();
+		this.fondoR.x = 2048 / 2 - 2048 / 2;
+		this.fondoR.y = 1024 / 2 - 1024 / 2;
+		this.fondoR.width = 2048;
+		this.fondoR.height = 1024;
+		
+		// Creo el rectángulo para zack normal.
+		this.zackR = new Rectangle();
+		this.zackR.x = 1024;
+		this.zackR.y = 190;
+		this.zackR.width = 64;
+		this.zackR.height = 128;
+		
+		// Creo el rectángulo para zack derecha.
+		this.zackDerechaR = new Rectangle();
+		this.zackDerechaR.x = 1024;
+		this.zackDerechaR.y = 190;
+		this.zackDerechaR.width = 64;
+		this.zackDerechaR.height = 128;
+		
+		// Crel el rectángulo para la pocima
+		this.pocimaR = new Rectangle();	
+		this.pocimaR.x = 1024;
+		this.pocimaR.y = 1024 - 160;
+		this.pocimaR.width = 256;
+		this.pocimaR.height = 256;
+		
+		// Creo la lluvia de llamas en el cielo
+		this.lluviaPocimas();
+											
 	}
-
-	public void zackDerecha() {
-		jumper.applyLinearImpulse(new Vector2(
-				zackDireccion.x += 350 * Gdx.graphics.getDeltaTime(), 0),
-				jumper.getWorldCenter(), true);
-		this.lote.begin();
-		this.lote.draw(currentFrameDerecha, this.zackDireccion.x,
-				this.zackDireccion.y);
-		if (jumperFacingRight == false) {
-			jumperSprite.flip(true, false);
-		}
-		this.lote.end();
-
-	}
-
-	public void movimientoPlataformaBonus() {
-		this.pre1.x += 600 * Gdx.graphics.getDeltaTime();
-		this.pre2.x += 400 * Gdx.graphics.getDeltaTime();
-		this.pre3.y -= 300 * Gdx.graphics.getDeltaTime();
-		this.pre4.x -= 500 * Gdx.graphics.getDeltaTime();
-		this.pre5.y += 300 * Gdx.graphics.getDeltaTime();
-	}
-
-	public void zackIzquierda() {
-		jumper.applyLinearImpulse(new Vector2(
-				zackDireccion.x -= 350 * Gdx.graphics.getDeltaTime(), 0.0f),
-				jumper.getWorldCenter(), true);
-		if (jumperFacingRight == false) {
-			jumperSprite.flip(true, false);
-		}
-		this.lote.begin();
-		this.lote.draw(this.currentFrameIzquierda, this.zackDireccion.x,
-				this.zackDireccion.y);
-		this.lote.end();
-	}
-
-	public void saltar() {
-		if (Math.abs(jumper.getLinearVelocity().y) < 10) {
-			jumper.applyLinearImpulse(
-					new Vector2(0.6f, zackDireccion.y += 0.66f * Gdx.graphics
-							.getFramesPerSecond()), jumper.getWorldCenter(),
-					false);
-		}
-
-		this.lote.begin();
-		this.lote.draw(currentFrameDerecha, this.zackDireccion.x,
-				this.zackDireccion.y);
-		this.lote.end();
-	}
-
-	public void mostrarPreg() {
-		this.lote.begin();
-		this.lote.draw(this.interrogacion, this.pre1.x, this.pre1.y);
-		this.lote.draw(this.interrogacion, this.pre2.x, this.pre2.y);
-		this.lote.draw(this.interrogacion, this.pre3.x, this.pre3.y);
-		this.lote.draw(this.interrogacion, this.pre4.x, this.pre4.y);
-		this.lote.draw(this.interrogacion, this.pre5.x, this.pre5.y);
-		this.lote.end();
+	
+	/**
+	 * Inicia la lluvia de llamas.
+	 */
+	public void lluviaPocimas() {
+		Rectangle p  = new Rectangle();		
+		p.x = MathUtils.random(0, 2048 - 64);
+		p.y = 1024;
+		p.width = 64;
+		p.height = 64;		
+		this.pocimas.add(p);
+		this.tiempoUltimaPocima = TimeUtils.nanoTime();				
 	}
 
 	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1f);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glEnable(GL10.GL_BLEND);
-		// this.lote.setProjectionMatrix(this.camara.combined);
-		// Actualizo la c�mara
-		// this.camara.update();
-		// this.renderer.setView(camara);
-		// this.renderer.render();
-
-		zackDireccion.y -= 700 * Gdx.graphics.getDeltaTime();
-		movimientoPlataformaBonus();
-		mostrarPreg();
-		// /////////////////////////////////////////////////////////
-		// if (this.zackDireccion.overlaps(pre1)
-		// || this.zackDireccion.overlaps(pre2)
-		// || this.zackDireccion.overlaps(pre3)
-		// || this.zackDireccion.overlaps(pre4)
-		// || this.zackDireccion.overlaps(pre5)){
-		// this.puntaje = + 80;
-		// }
-		if (this.zackDireccion.overlaps(pre1)) {
-			this.puntaje = +80;
-		} else if (this.zackDireccion.overlaps(pre2)) {
-			this.puntaje = +80;
-		} else if (this.zackDireccion.overlaps(pre3)) {
-			this.puntaje = +80;
-		} else if (this.zackDireccion.overlaps(pre4)) {
-			this.puntaje = +80;
-		} else if (this.zackDireccion.overlaps(pre5)) {
-			this.puntaje = +80;
-		}
-
-		// ////////////////////////////////////////////////////////////////////
-		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			salto = true;
-			if (salto) {
-				System.out.println("Puede saltar");
-				saltar();
-				if (zackDireccion.y > 200) {
-					zackDireccion.y = 200 - 20;
-					System.out.println("Si fue posible el salto");
-					salto = false;
-
-				}
-
-			}
-
-		}
-		// //////////////////////////////////////////////////////////////////////
-
-		if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-			this.lote.begin();
-			this.lote.draw(this.zackNormal, this.zackDireccion.x,
-					this.zackDireccion.y);
-			this.lote.end();
-		}
-
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			this.zackDerecha();
-			// camara.position.x += 3.6f + Gdx.graphics.getDeltaTime();
-		}
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			this.zackIzquierda();
-			// camara.position.x -= 3.6f + Gdx.graphics.getDeltaTime();
-		}
-
-		this.world.step(stateTime, 3, 3);
+	public void render(float delta) {	
+		this.camara.update();
+		this.juego.texto.setScale((float) 1.5);
+		
+		this.spriteBatchN.setProjectionMatrix(this.camara.combined);
+		
+		
 		this.stateTime += Gdx.graphics.getDeltaTime();
-		this.currentFrameDerecha = this.walkAnimationDerecha.getKeyFrame(
-				this.stateTime, true);
-		this.currentFrameIzquierda = this.walkAnimationIzquierda.getKeyFrame(
-				this.stateTime, true);
-
-		if (zackDireccion.x < 0)
-			zackDireccion.x = 0;
-
-		if (zackDireccion.y < 0) {
-			zackDireccion.y = 0;
-		}
-
-		if (zackDireccion.y > 1024 - 64)
-			zackDireccion.y = 1024 - 64;
-
-		// if (camara.position.x < Gdx.graphics.getWidth() / 2) {
-		// camara.position.x = Gdx.graphics.getWidth() / 2;
-		// }
-
+        this.currentFrameDerecha = this.walkAnimationDerecha.getKeyFrame(this.stateTime, true);
+        this.currentFrameIzquierda = this.walkAnimationIzquierda.getKeyFrame(this.stateTime, true);
+             
+		this.juego.batch.begin();
+		this.juego.batch.draw(this.fondoImg, this.fondoR.x, this.fondoR.y);
+		this.juego.texto.setColor(0, 0, 0, 1);
+		this.juego.texto.draw(this.juego.batch, "ESC: Salir", 100, 1010);
+		this.juego.texto.draw(this.juego.batch, "Nivel Bonus", 2048 / 2 - 500, 1010);
+		this.juego.texto.draw(this.juego.batch, "Cantidad Pocimas: " + this.numeroPocimasJugador, 2048 / 2 + 100, 1010);
+		this.juego.texto.draw(this.juego.batch, "Puntaje: " + this.puntaje, 2048 / 2 + 500, 1010);		
+		// Dibuja las llamas
+		for (Rectangle p : this.pocimas) {
+			this.juego.batch.draw(this.pocimaImg, p.x, p.y);			
+		}	
+		this.juego.batch.end();
+		
+		this.spriteBatchN.begin();
+        this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);        
+        this.spriteBatchN.end();
+        
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+        	this.zackDerecha();
+        }
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+        	this.zackIzquierda();
+        }       
+        if (!Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+     	   this.spriteBatchN.setColor(1, 1, 1, 1);
+     	   this.spriteBatchN.begin();
+            this.spriteBatchN.draw(this.zackNormal, this.zackR.x, this.zackR.y);
+            this.spriteBatchN.end();
+        }
+        // Verifica si necesitamos crear mas llamas
+        if (TimeUtils.nanoTime() - this.tiempoUltimaPocima > 1000000000 ) {
+        	this.lluviaPocimas();
+        }
+        // 	move the raindrops, remove any that are beneath the bottom edge of
+        // the screen or that hit the bucket. In the later case we play back
+        // a sound effect as well.
+        Iterator<Rectangle> iter = this.pocimas.iterator();
+        while (iter.hasNext()) {
+        	Rectangle p2 = iter.next();
+        	p2.y -= 1200 * Gdx.graphics.getDeltaTime();
+        	if (p2.y + 64 < 0 ) {
+        		iter.remove();
+        		this.numeroPocimas -= 1;
+        	}
+        	if (p2.overlaps(this.zackR) || p2.overlaps(this.zackDerechaR)) {        		        		
+        		iter.remove();
+        		this.numeroPocimas -= 1;
+        		this.numeroPocimasJugador -= 1;
+        	}
+        }       
+        if (this.numeroPocimasJugador == 0) {        	        	          	
+        	this.juego.setScreen(new GanasteB(this.juego, this.puntaje, this.vidas));
+        }
+        if (this.numeroPocimas == 0) {
+        	this.juego.setScreen(new GanastePechera(this.juego, this.puntaje, this.vidas));
+        }
+        if (this.zackR.x <= 0) {
+        	this.zackR.x = 0;
+        	this.zackDerechaR.x = 0;
+        }
+        if (this.zackR.x >= 2048 - 64) {
+        	this.zackR.x = 2048 - 64;
+        	this.zackDerechaR.x = 2048 - 64;
+        }
+        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+        	Gdx.app.exit();
+        	this.dispose();
+        }
 	}
-
+	
+	/**
+	 * Mueve el sprite hacia la derecha
+	 */
+	public void zackDerecha() {
+		this.spriteBatchN.setColor(1, 1, 1, 0);
+		this.zackR.x += 550 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x += 500 * Gdx.graphics.getDeltaTime();		
+		
+		this.juego.batch.begin();		
+		this.juego.batch.draw(this.currentFrameDerecha, this.zackDerechaR.x, this.zackDerechaR.y);
+		this.juego.batch.end();
+	}	
+	
+	/**
+	 * Mueve el sprite hacia la izquierda
+	 */
+	public void zackIzquierda() {
+		this.spriteBatchN.setColor(1, 1, 1, 0);
+		this.zackR.x -= 550 * Gdx.graphics.getDeltaTime();
+		this.zackDerechaR.x -= 500 * Gdx.graphics.getDeltaTime();		
+		
+		this.juego.batch.begin();		
+		this.juego.batch.draw(this.currentFrameIzquierda, this.zackDerechaR.x, this.zackDerechaR.y);
+		this.juego.batch.end();
+	}
+			
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void dispose() {
-		this.fondoImg.dispose();
-		this.fondoNive11.dispose();
-		this.map.dispose();
-
+		this.walkSheetDerecha.dispose();
+		this.walkSheetIzquierda.dispose();
+		this.zackNormal.dispose();
+		this.fondoImg.dispose();				
 	}
 
 }
